@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/gradiant"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:background="@drawable/ic_baseline_close_24_white"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp"
+            android:id="@+id/close"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Verify Groups"
+            android:layout_marginLeft="20dp"
+            android:textColor="#fff"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"></TextView>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Status :"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"></TextView>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:weightSum="1"
+        android:orientation="vertical"
+        android:id="@+id/approval"
+        >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Approved"
+            android:textSize="16sp"
+            android:tag="1"
+            android:id="@+id/approved"
+            android:checked="false"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rejected"
+            android:id="@+id/rejected"
+            android:textSize="16sp"
+            android:tag="2"
+            android:checked="true"
+            android:layout_weight="0.13" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending"
+            android:id="@+id/pending"
+            android:textSize="16sp"
+            android:tag="0"
+            android:checked="true"
+            android:layout_weight="0.13" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="FS Name :"
+        android:id="@+id/fs_name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="FS ID :"
+        android:id="@+id/fs_id"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Branch ID :"
+        android:id="@+id/branch_id"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Date Time :"
+        android:id="@+id/date_time"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"></TextView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="Save"
+        android:padding="10dp"
+        android:background="#FB8C00"
+        android:id="@+id/submit"
+        android:textSize="18sp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="#fff"
+        android:layout_height="wrap_content"></Button>
+
+</LinearLayout>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/form_bg_color"
+    tools:context=".Activites.GroupManager.CGT.CGTProcessActivity">
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:fillViewport="true"
+      android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        app:cardCornerRadius="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        app:cardBackgroundColor="#fff"
+        app:cardMaxElevation="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+
+
+
+            <com.jaiselrahman.hintspinner.HintSpinner
+                android:id="@+id/area_name"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+
+                />
+
+            <com.jaiselrahman.hintspinner.HintSpinner
+                android:id="@+id/center_name"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+
+                />
+
+
+            <com.jaiselrahman.hintspinner.HintSpinner
+                android:id="@+id/group_name"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+
+                />
+
+
+
+
+
+
+
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/process_activity"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+            </EditText>
+            <ListView
+                android:layout_width="match_parent"
+                android:id="@+id/member_list"
+                android:layout_height="match_parent">
+
+            </ListView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:background="#ddd"
+                    android:scaleType="fitXY"
+                    android:id="@+id/pr"
+                    android:layout_gravity="center_vertical"
+
+                    android:layout_height="40dp">
+
+                </ImageView>
+                <Button
+                    android:layout_width="match_parent"
+                    android:id="@+id/upload_picture"
+                    android:text="Tap to upload picture"
+                    android:layout_height="50dp"></Button>
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <Button
+        android:layout_width="match_parent"
+        android:text="Save"
+        android:padding="10dp"
+        android:background="#fff"
+        android:id="@+id/submit"
+        android:textSize="18sp"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="#F4511E"
+        android:layout_height="50dp"></Button>
+    <Button
+        android:layout_width="match_parent"
+        android:text="RESET"
+        android:padding="10dp"
+        android:background="#fff"
+        android:id="@+id/reset"
+        android:textSize="18sp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="#F4511E"
+        android:layout_height="50dp"></Button>
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

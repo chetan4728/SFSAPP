@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/form_bg_color"
+    tools:context=".Activites.GroupManager.Center.CreateCenterActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        app:cardCornerRadius="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        app:cardBackgroundColor="#fff"
+        app:cardMaxElevation="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+
+
+
+            <com.jaiselrahman.hintspinner.HintSpinner
+                android:id="@+id/area_name"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="@drawable/border_disable"
+                android:layout_height="wrap_content"
+
+
+                />
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Center Name"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:layout_marginTop="10dp"
+                android:id="@+id/center_name"
+                android:gravity="top"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Center Description"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:background="@drawable/border"
+                android:layout_marginTop="10dp"
+                android:id="@+id/center_desc"
+
+                android:layout_height="80dp"
+                android:inputType="text|textMultiLine"
+                android:gravity="top"
+           >
+
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Created By"
+                android:layout_marginTop="10dp"
+
+                android:textStyle="bold"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:background="@drawable/border_disable"
+                android:layout_marginTop="10dp"
+                android:gravity="top"
+                android:focusable="false"
+                android:padding="5dp"
+                android:id="@+id/created_by"
+                android:layout_height="wrap_content">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Created Date"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:focusable="false"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_disable"
+                android:gravity="top"
+                android:id="@+id/created_date"
+                android:layout_marginBottom="10dp"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Branch Office"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:background="@drawable/border_disable"
+                android:layout_marginTop="10dp"
+                android:id="@+id/branch_office"
+                android:gravity="top"
+                android:focusable="false"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+            </EditText>
+
+
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <Button
+        android:layout_width="match_parent"
+        android:text="Save"
+        android:padding="10dp"
+        android:onClick="submit"
+        android:background="#fff"
+        android:id="@+id/submit"
+        android:textSize="18sp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="#F4511E"
+        android:layout_height="50dp"></Button>
+</LinearLayout>

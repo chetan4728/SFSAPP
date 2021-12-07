@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+    <group android:id="@+id/survey"
+        android:checkableBehavior="single">
+        <item android:id="@+id/call_history"
+            android:icon="@drawable/ic_baseline_assignment_24"
+            android:title="Survey" />
+
+        <item android:id="@+id/acq"
+            android:icon="@drawable/ic_baseline_font_download_24"
+            android:title="Acquisition" />
+
+        <item android:id="@+id/meeting"
+            android:icon="@drawable/ic_baseline_camera_front_24"
+            android:textSize="20sp"
+            android:title="Meeting" />
+
+
+        <item android:id="@+id/collection"
+            android:textSize="20sp"
+            android:icon="@drawable/ic_baseline_request_page_24"
+            android:title="Collection" />
+
+        <item android:id="@+id/center_location"
+            android:textSize="20sp"
+            android:icon="@drawable/ic_baseline_my_location_24"
+            android:title="Center Location" />
+
+    </group>
+
+    <group android:id="@+id/gp2"  android:checkableBehavior="single">
+
+
+
+
+        <item android:id="@+id/sync_to_server"
+            android:textSize="20sp"
+            android:icon="@drawable/ic_baseline_arrow_downward_24"
+            android:title="SYNC TO SERVER" />
+
+        <item android:id="@+id/sync_from_server"
+            android:textSize="20sp"
+            android:icon="@drawable/ic_baseline_arrow_upward_24"
+            android:title="SYNC FROM SERVER" />
+
+        <item android:id="@+id/version"
+            android:textSize="20sp"
+            android:title="App Version 1.0.0"  />
+
+
+    </group>
+
+</menu>

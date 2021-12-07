@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_header"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+   android:background="@drawable/gradiant"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/img_avatar"
+        android:id="@+id/profile_image"
+        android:layout_gravity="center_horizontal"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#fff"/>
+
+
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:orientation="vertical"
+         android:layout_gravity="center_vertical"
+         android:layout_marginLeft="10dp"
+         android:layout_height="wrap_content">
+
+         <TextView
+             android:layout_width="match_parent"
+             android:text="Welcome Guest"
+             android:textColor="#fff"
+             android:id="@+id/profile_name"
+             android:textSize="16sp"
+             android:fontFamily="@font/alice"
+             android:textStyle="bold"
+             android:layout_height="wrap_content"></TextView>
+
+         <TextView
+             android:layout_width="match_parent"
+             android:text="Transaction Executive"
+             android:textColor="#fff"
+             android:fontFamily="@font/alice"
+             android:layout_marginTop="2dp"
+             android:id="@+id/editProfile"
+             android:textSize="12sp"
+             android:textStyle="bold"
+             android:layout_height="wrap_content"></TextView>
+
+     </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/gradiant"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:background="@drawable/ic_baseline_close_24_white"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp"
+            android:id="@+id/close"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="View Document"
+            android:layout_marginLeft="20dp"
+            android:textColor="#fff"
+            android:padding="10dp"
+            android:id="@+id/doc_name"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"></TextView>
+
+    </LinearLayout>
+   <ImageView
+       android:layout_width="match_parent"
+       android:id="@+id/document"
+       android:background="@drawable/file_not_found"
+       android:layout_height="match_parent"></ImageView>
+
+</LinearLayout>

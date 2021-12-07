@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group>
+        android:checkableBehavior="single">
+        <item android:id="@+id/add_survey"
+            android:icon="@drawable/ic_baseline_post_add_24"
+            app:showAsAction="ifRoom"
+            android:title="Survey" />
+
+        <item android:id="@+id/sync_survey"
+            android:icon="@drawable/ic_baseline_sync_alt_24"
+            app:showAsAction="ifRoom"
+            android:title="Acquisition" />
+
+
+
+    </group>
+
+
+</menu>

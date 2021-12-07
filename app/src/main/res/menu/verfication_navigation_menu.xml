@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+    <group
+        android:checkableBehavior="single">
+        <item android:id="@+id/survey"
+            android:icon="@drawable/ic_baseline_assignment_24"
+            android:title="Pending Survey" />
+
+        <item android:id="@+id/acq"
+            android:icon="@drawable/ic_baseline_font_download_24"
+            android:title="Pending Centers" />
+
+        <item android:id="@+id/upcoming_collection"
+            android:icon="@drawable/ic_baseline_camera_front_24"
+            android:textSize="20sp"
+            android:title="Upcoming Collection" />
+
+
+        <item android:id="@+id/cash_collection"
+            android:textSize="20sp"
+            android:icon="@drawable/ic_baseline_request_page_24"
+            android:title="Cash Collection" />
+
+        <item android:id="@+id/center_location"
+            android:textSize="20sp"
+            android:icon="@drawable/ic_baseline_my_location_24"
+            android:title="Face Tagging" />
+
+    </group>
+
+    <group android:id="@+id/gp2"  android:checkableBehavior="single">
+
+
+
+
+
+
+        <item android:id="@+id/version"
+            android:textSize="20sp"
+            android:title="App Version 1.0.0"  />
+
+
+    </group>
+
+</menu>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MicroFinance</string>
+    <string name="role_code_group_manager">TREX</string>
+    <string name="role_code_field_manager">VFX</string>
+    <string-array name="yes_no">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="Quality_Roads">
+        <item>Good</item>
+        <item>Bad</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

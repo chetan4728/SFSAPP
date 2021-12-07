@@ -1,0 +1,1675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/form_bg_color"
+    tools:context=".Activites.GroupManager.Survey.ManageSurveyActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:text="Survey Info"
+
+
+                    android:textAllCaps="true"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    />
+
+
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/area_name"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Survey Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/survey_title"
+                        android:gravity="top"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="MBB Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                       />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/mbb_name"
+                        android:gravity="top"
+                        android:padding="15dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Created By"
+                        android:layout_marginTop="10dp"
+
+                        android:textStyle="bold"
+                     />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border_disable"
+                        android:layout_marginTop="10dp"
+                        android:gravity="top"
+                        android:focusable="false"
+                        android:padding="5dp"
+                        android:id="@+id/created_by"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Created Date"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:focusable="false"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border_disable"
+                        android:gravity="top"
+                        android:id="@+id/created_date"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Number OF HOUSEHOLDS"
+
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Total"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border"
+                        android:padding="15dp"
+                        android:textColor="#000"
+                        android:inputType="number"
+                        android:id="@+id/enter_total_household"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Minority HouseHold"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_minority_household"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter SC HouseHold"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                         />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_sc_household"
+                        android:gravity="top"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter OBC HouseHold"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="top"
+                        android:inputType="number"
+                        android:id="@+id/enter_obc_household"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter ST HouseHold"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                       />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="top"
+                        android:inputType="number"
+                        android:id="@+id/enter_st_household"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Agriculture Details"
+
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter The Area (acres)"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                 />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border"
+                        android:padding="5dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/enter_area_acres"
+                        android:textColor="#000"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Water Reservoir"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/enter_water_reservolr"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Rain Fed (acres)"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                  />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="top"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/enter_rain_fed"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Forest Land"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="top"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/enter_forest_land"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Irrigated (acres)"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                     />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/enter_irrigated_area"
+                        android:gravity="top"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Agriculture Yield and productivity"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Crop Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                         />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_crop_name"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Acres Under Cultivation"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                   />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:gravity="top"
+                        android:inputType="number"
+                        android:id="@+id/enter_under_cultivation"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Per Acre Yield (KG)"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                    />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_per_acre_yield"
+                        android:gravity="top"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Crop Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_crop_name_second"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Acres Under Cultivation"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                       />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/enter_under_cultivation_second"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Per Acre Yield (KG)"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                     />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/enter_per_acre_yield_second"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Crop Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_crop_name_third"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Acres Under Cultivation"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_under_cultivation_third"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Per Acre Yield (KG)"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_per_acre_yield_third"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Crop Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_crop_name_fourth"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Acres Under Cultivation"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_under_cultivation_fourth"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Per Acre Yield (KG)"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                      />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/enter_per_acre_yield_fourth"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Details of important NFS Business"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number of Hotels"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                 />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_number_of_hotels"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number of Utensil Shops"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_number_of_utensil_shops"
+                        android:inputType="number"
+                        android:gravity="top"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number Of Tea Shops"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_number_of_tea_shops"
+                        android:inputType="number"
+                        android:gravity="top"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number Of Agri-Input Shops"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_number_of_agri_shops"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number Of Kirana Shops"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:id="@+id/enter_number_of_kirana_shops"
+                        android:inputType="number"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number of Agree Processing Unit"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_number_of_agree_proce_unit"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number of Tailoring Shops"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_number_of_tailoring_shops"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number of Pan Shops"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                     />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:inputType="number"
+                        android:id="@+id/enter_number_of_pan_shops"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number Of Cycle Shops"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                       />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:inputType="number"
+                        android:id="@+id/enter_number_of_cycle_shops"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number of Others"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                       />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_number_of_other_shops"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number Of Electrical Repair and Service Shops"
+                        android:layout_marginTop="10dp"
+
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_number_of_repair_service_shops"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+
+
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Availability of"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/bus_service"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        />
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/auto_service"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border"
+                        android:layout_height="wrap_content"
+                      />
+
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/police_station"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        />
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/market"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+                        />
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/primary_health_center"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/primary_school"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border"
+
+                       />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/number_of_school"
+                        android:inputType="number"
+                        android:hint="Enter No of School"
+                        android:layout_height="wrap_content"></EditText>
+
+                    <com.jaiselrahman.hintspinner.HintSpinner
+                        android:id="@+id/quality_of_roads"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border"
+                        android:layout_height="wrap_content"
+                        />
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Non Financial Institution"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Dairy Society"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_dairy_society_number"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_dairy_society_client"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Farmers Club"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_farmers_club_number"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_farmers_club_client"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="SHGs"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_shgs_number"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_shgs_client"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Financial Institution"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Co-Operative Credit Society"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_co_operative_number"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_co_operative_client"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Co-Operative Bank Branch"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_co_operative_branch_number"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_co_operative_branch_client"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Grameem Bank Branch"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_grameem_branch_number"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_grameem_branch_client"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Commercial Bank Branch"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_comercial_branch_number"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_comercial_branch_client"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="MFIs"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginBottom="20dp"
+                app:cardMaxElevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_mfi_name_1"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_mfi_number_1"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_mfi_client_1"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_mfi_name_2"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_mfi_number_2"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/enter_mfi_client_2"
+                        android:inputType="number"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_mfi_name_3"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_mfi_number_3"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_mfi_client_3"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Name"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_mfi_name_4"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Number"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:inputType="number"
+                        android:id="@+id/enter_mfi_number_4"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Client"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:padding="5dp"
+                        android:id="@+id/enter_mfi_client_4"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:text="Save"
+                android:padding="10dp"
+                android:background="#fff"
+               android:id="@+id/submit"
+                android:textSize="18sp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#F4511E"
+                android:layout_height="50dp"></Button>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
+
