@@ -33,7 +33,9 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.ingenioussys.microfinance.Activites.GroupManager.Groups.CreateGroupActivity;
 import com.ingenioussys.microfinance.Activites.GroupManager.Groups.ViewGroupTransactionActivity;
+import com.ingenioussys.microfinance.Activites.GroupManager.LoanApplication.LoanTransactionActivity;
 import com.ingenioussys.microfinance.Adapter.GroupTransactionsAdapter;
+import com.ingenioussys.microfinance.Adapter.LoanApplicationAdapter;
 import com.ingenioussys.microfinance.ApiServices.APIService;
 import com.ingenioussys.microfinance.R;
 import com.ingenioussys.microfinance.database.AppDatabase;
@@ -104,6 +106,7 @@ public class LoanActivityOne extends AppCompatActivity {
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     List<Center> List;
     List<Group> ListGroup;
+    List<LoanApplication> loanActivityOnes;
     int group_id_get = 0;
     long loan_application_id=0;
 
@@ -158,7 +161,7 @@ public class LoanActivityOne extends AppCompatActivity {
         created_date.setText(formattedDate);
 
         RadioGroup approval   =findViewById(R.id.approval);
-        Toast.makeText(this, ""+prefManager.getString("branch_id"), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, ""+prefManager.getString("branch_id"), Toast.LENGTH_SHORT).show();
 
 
         approval.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -265,9 +268,10 @@ public class LoanActivityOne extends AppCompatActivity {
         });
 
         load_centers();
-        Toast.makeText(this, ""+getIntent().getStringExtra("loan_application_number"), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, ""+getIntent().getStringExtra("loan_application_number"), Toast.LENGTH_SHORT).show();
         if(getIntent().getStringExtra("loan_application_number")!=null)
         {
+            load_centers();
             load_data();
         }
     }
@@ -452,57 +456,78 @@ public class LoanActivityOne extends AppCompatActivity {
 
     public void load_data()
     {
-        //Toast.makeText(this, ""+getIntent().getStringExtra("loan_application_number"), Toast.LENGTH_SHORT).show();
-        AsyncTask.execute(() -> {
+      //  Toast.makeText(this, "dfdfdf"+getIntent().getStringExtra("loan_application_number"), Toast.LENGTH_SHORT).show();
 
-            List<LoanApplication> LoanApplications =  new ArrayList<>();
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        okHttpClientBuilder
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        Request.Builder newRequest = request.newBuilder().header("Authorization", prefManager.getString("token"));
+                        return chain.proceed(newRequest.build());
+                    }
+                });
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER_URL)
+                .client(okHttpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIService service = retrofit.create(APIService.class);
+        Call<Result> call = service.get_loan_details(getIntent().getStringExtra("loan_application_number"));
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if (response.body().getError()) {
+                    Toast.makeText(LoanActivityOne.this, "errror" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
 
-            LoanApplications =   AppDatabase.getDatabase(LoanActivityOne.this).loanApplicationDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")),Integer.parseInt(prefManager.getString("branch_id")),getIntent().getStringExtra("loan_application_number"));
-            loan_application_no.setText(LoanApplications.get(0).getLoan_application_number());
-            loan_application_id = LoanApplications.get(0).getLoan_application_id();
-            applicant_name.setText(LoanApplications.get(0).getApplicant_name());
-            applicant_father_name.setText(LoanApplications.get(0).getApplicant_father_name());
-            dob.setText(LoanApplications.get(0).getDob());
-            age.setText(LoanApplications.get(0).getAge());
-            applicant_mob_no.setText(LoanApplications.get(0).getApplicant_mob_no());
-            address.setText(LoanApplications.get(0).getAddress());
-            tq.setText(LoanApplications.get(0).getTq());
-            dist.setText(LoanApplications.get(0).getDist());
-            state.setText(LoanApplications.get(0).getState());
-            pincode.setText(LoanApplications.get(0).getPincode());
-            uid_no.setText(LoanApplications.get(0).getUid_no());
-            group_id_get = LoanApplications.get(0).getGroup_id();
-            gender_string = LoanApplications.get(0).getGender();
-            created_date.setText(LoanApplications.get(0).getCreated_date());
-
-            if(gender_string.equals("Male")) {
-                male.setChecked(true);
-            }
-            else  if(gender_string.equals("Female")) {
-                female.setChecked(true);
-            }
+                        Log.d("loans",response.body().getData().toString());
 
 
-            for(int i=0;i<List.size();i++)
-            {
-                if(List.get(i).getCenter_id()==LoanApplications.get(0).getCenter_id())
-                {
-                     center_name.setSelection(i+1);
-                   // Toast.makeText(this, ""+ListGroup.size(), Toast.LENGTH_SHORT).show();
-                }
-            }
+                    try {
+                        JSONArray jsonarray = new JSONArray(response.body().getData().toString());
+                        Log.d("loansdd",jsonarray.toString());
 
+                        loan_application_no.setText(jsonarray.getJSONObject(0).getString("loan_application_number"));
+                        //loan_application_id = LoanApplications.get(0).getLoan_application_id();
+                        applicant_name.setText(jsonarray.getJSONObject(0).getString("applicant_name"));
+                        applicant_father_name.setText(jsonarray.getJSONObject(0).getString("applicant_father_name"));
+                        dob.setText(jsonarray.getJSONObject(0).getString("dob"));
+                        age.setText(jsonarray.getJSONObject(0).getString("age"));
+                        applicant_mob_no.setText(jsonarray.getJSONObject(0).getString("applicant_mob_no"));
+                        address.setText(jsonarray.getJSONObject(0).getString("address"));
+                        tq.setText(jsonarray.getJSONObject(0).getString("tq"));
+                        dist.setText(jsonarray.getJSONObject(0).getString("dist"));
+                        state.setText(jsonarray.getJSONObject(0).getString("state"));
+                        pincode.setText(jsonarray.getJSONObject(0).getString("pincode"));
+                        uid_no.setText(jsonarray.getJSONObject(0).getString("uid_no"));
+                        group_id_get = jsonarray.getJSONObject(0).getInt("group_id");
+                        gender_string =jsonarray.getJSONObject(0).getString("gender");
+                        created_date.setText(jsonarray.getJSONObject(0).getString("created_date"));
+                        if(gender_string.equals("Male")) {
+                            male.setChecked(true);
+                        }
+                        else  if(gender_string.equals("Female")) {
+                            female.setChecked(true);
+                        }
+                                    for(int i=0;i<centerArrayList.size();i++)
+                            {
+                               // Toast.makeText(LoanActivityOne.this, ""+centerArrayList.get(i).getCenter_id()+"--"+jsonarray.getJSONObject(0).getInt("center_id"), Toast.LENGTH_SHORT).show();
+                                if(centerArrayList.get(i).getCenter_id()==jsonarray.getJSONObject(0).getInt("center_id"))
+                                {
+                                     center_name.setSelection(i+1);
+                                   // Toast.makeText(this, ""+ListGroup.size(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-        });
-
-
-            new android.os.Handler(Looper.getMainLooper()).postDelayed(
+                                    new android.os.Handler(Looper.getMainLooper()).postDelayed(
                     new Runnable() {
                         public void run() {
 
-                                for (int j = 0; j < ListGroup.size(); j++) {
+                                for (int j = 0; j < groupArrayList.size(); j++) {
                                     // Toast.makeText(LoanActivityOne.this, ""+ListGroup.get(j).getGroup_id()+""+group_id_get, Toast.LENGTH_SHORT).show();
-                                    if (ListGroup.get(j).getGroup_id() == group_id_get) {
+                                    if (groupArrayList.get(j).getGroup_id() == group_id_get) {
                                         group_name.setSelection(j+1);
 
                                     }
@@ -511,6 +536,79 @@ public class LoanActivityOne extends AppCompatActivity {
                         }
                     },
                     2000);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(LoanActivityOne.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        //Toast.makeText(this, ""+getIntent().getStringExtra("loan_application_number"), Toast.LENGTH_SHORT).show();
+//        AsyncTask.execute(() -> {
+//
+//            List<LoanApplication> LoanApplications =  new ArrayList<>();
+//
+//            LoanApplications =   AppDatabase.getDatabase(LoanActivityOne.this).loanApplicationDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")),Integer.parseInt(prefManager.getString("branch_id")),getIntent().getStringExtra("loan_application_number"));
+//            loan_application_no.setText(LoanApplications.get(0).getLoan_application_number());
+//            loan_application_id = LoanApplications.get(0).getLoan_application_id();
+//            applicant_name.setText(LoanApplications.get(0).getApplicant_name());
+//            applicant_father_name.setText(LoanApplications.get(0).getApplicant_father_name());
+//            dob.setText(LoanApplications.get(0).getDob());
+//            age.setText(LoanApplications.get(0).getAge());
+//            applicant_mob_no.setText(LoanApplications.get(0).getApplicant_mob_no());
+//            address.setText(LoanApplications.get(0).getAddress());
+//            tq.setText(LoanApplications.get(0).getTq());
+//            dist.setText(LoanApplications.get(0).getDist());
+//            state.setText(LoanApplications.get(0).getState());
+//            pincode.setText(LoanApplications.get(0).getPincode());
+//            uid_no.setText(LoanApplications.get(0).getUid_no());
+//            group_id_get = LoanApplications.get(0).getGroup_id();
+//            gender_string = LoanApplications.get(0).getGender();
+//            created_date.setText(LoanApplications.get(0).getCreated_date());
+//
+//            if(gender_string.equals("Male")) {
+//                male.setChecked(true);
+//            }
+//            else  if(gender_string.equals("Female")) {
+//                female.setChecked(true);
+//            }
+//
+//
+//            for(int i=0;i<List.size();i++)
+//            {
+//                if(List.get(i).getCenter_id()==LoanApplications.get(0).getCenter_id())
+//                {
+//                     center_name.setSelection(i+1);
+//                   // Toast.makeText(this, ""+ListGroup.size(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//
+//        });
+//
+//
+//            new android.os.Handler(Looper.getMainLooper()).postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//
+//                                for (int j = 0; j < ListGroup.size(); j++) {
+//                                    // Toast.makeText(LoanActivityOne.this, ""+ListGroup.get(j).getGroup_id()+""+group_id_get, Toast.LENGTH_SHORT).show();
+//                                    if (ListGroup.get(j).getGroup_id() == group_id_get) {
+//                                        group_name.setSelection(j+1);
+//
+//                                    }
+//                                }
+//
+//                        }
+//                    },
+//                    2000);
 
     }
     public void  update_form()
@@ -632,43 +730,47 @@ public class LoanActivityOne extends AppCompatActivity {
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             String formattedDate = df.format(c);
             loanApplication.setCreated_date(formattedDate);
+            loanApplication.setCreated_date(formattedDate);
 
+            loanActivityOnes =  new ArrayList<>();
+            loanActivityOnes.add(loanApplication);
+            UpdateToserver(loanActivityOnes);
 
-            progressDialog.show();
+           // progressDialog.show();
 
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            AsyncTask.execute(() -> {
-                                AppDatabase.getDatabase(LoanActivityOne.this).loanApplicationDao().update(loanApplication);
-                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new android.os.Handler().postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                        progressDialog.dismiss();
-                                                           UpdateRowToServer(getIntent().getStringExtra("loan_application_number"));
-                                                           Intent intent =  new Intent(LoanActivityOne.this,LoanActivityTwo.class);
-                                                           Bundle bundle =  new Bundle();
-                                                           bundle.putLong("id", loan_application_id);
-                                                           bundle.putString("loan_application_no",loan_application_no.getText().toString());
-                                                           intent.putExtras(bundle);
-                                                           startActivity(intent);
-
-                                                    }
-                                                },
-                                                1000);
-                                    }
-                                });
-
-
-
-                            });
-                        }
-                    },
-                    2000);
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            AsyncTask.execute(() -> {
+//                                AppDatabase.getDatabase(LoanActivityOne.this).loanApplicationDao().update(loanApplication);
+//                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        new android.os.Handler().postDelayed(
+//                                                new Runnable() {
+//                                                    public void run() {
+//                                                        progressDialog.dismiss();
+//                                                           UpdateRowToServer(getIntent().getStringExtra("loan_application_number"));
+//                                                           Intent intent =  new Intent(LoanActivityOne.this,LoanActivityTwo.class);
+//                                                           Bundle bundle =  new Bundle();
+//                                                           bundle.putLong("id", loan_application_id);
+//                                                           bundle.putString("loan_application_no",loan_application_no.getText().toString());
+//                                                           intent.putExtras(bundle);
+//                                                           startActivity(intent);
+//
+//                                                    }
+//                                                },
+//                                                1000);
+//                                    }
+//                                });
+//
+//
+//
+//                            });
+//                        }
+//                    },
+//                    2000);
 
 
 
@@ -777,7 +879,7 @@ public class LoanActivityOne extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(LoanActivityOne.this, ""+gender_string, Toast.LENGTH_SHORT).show();
+                                          //  Toast.makeText(LoanActivityOne.this, ""+gender_string, Toast.LENGTH_SHORT).show();
 
                             LoanApplication loanApplication =  new LoanApplication();
                             loanApplication.setLoan_application_number(loan_application_no.getText().toString());
@@ -808,24 +910,26 @@ public class LoanActivityOne extends AppCompatActivity {
                             String formattedDate = df.format(c);
                             loanApplication.setCreated_date(formattedDate);
 
-
-                                            ExecutorService executor = Executors.newSingleThreadExecutor();
-
-                                            executor.execute(() -> {
-
-                                                   AppDatabase.getDatabase(LoanActivityOne.this).loanApplicationDao().insert(loanApplication);
-                                                    runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            insertRowToServer(loan_application_no.getText().toString());
-                                                            progressDialog.dismiss();
-                                                        }
-                                                    });
-
-
-
-
-                                            });
+                                            loanActivityOnes =  new ArrayList<>();
+                                            loanActivityOnes.add(loanApplication);
+                                            SubmitSurveyServer(loanActivityOnes);
+//                                            ExecutorService executor = Executors.newSingleThreadExecutor();
+//
+//                                            executor.execute(() -> {
+//
+//                                                   AppDatabase.getDatabase(LoanActivityOne.this).loanApplicationDao().insert(loanApplication);
+//                                                    runOnUiThread(new Runnable() {
+//                                                        @Override
+//                                                        public void run() {
+//                                                            insertRowToServer(loan_application_no.getText().toString());
+//                                                            progressDialog.dismiss();
+//                                                        }
+//                                                    });
+//
+//
+//
+//
+//                                            });
 
 
 
@@ -961,7 +1065,7 @@ public class LoanActivityOne extends AppCompatActivity {
                                 center_id = centerArrayList.get(i).getCenter_id();
                                 area_id = centerArrayList.get(i).getArea_id();
                                 load_groups(center_id);
-                                Toast.makeText(LoanActivityOne.this, ""+centerArrayList.get(i).getCenter_id(), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(LoanActivityOne.this, ""+centerArrayList.get(i).getCenter_id(), Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -1030,7 +1134,7 @@ public class LoanActivityOne extends AppCompatActivity {
 
                         for(int i=0; i < jsonarray.length() ; i++)
                         {
-                            Toast.makeText(LoanActivityOne.this, ""+jsonarray.getJSONObject(i).getString("group_name"), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoanActivityOne.this, ""+jsonarray.getJSONObject(i).getString("group_name"), Toast.LENGTH_SHORT).show();
                             Group group =  new Group();
                             group.setCenter_id(jsonarray.getJSONObject(i).getInt("center_id"));
                             group.setArea_name(jsonarray.getJSONObject(i).getString("area_name"));
@@ -1057,7 +1161,7 @@ public class LoanActivityOne extends AppCompatActivity {
                     }
                     // Toast.makeText(TakeSurveyActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                    group_name.setAdapter(new HintSpinnerAdapter<Group>(getApplicationContext(), groupArrayList, "Select Center") {
+                    group_name.setAdapter(new HintSpinnerAdapter<Group>(getApplicationContext(), groupArrayList, "Select Groups") {
                         @Override
                         public String getLabelFor(Group group) {
                             return group.getGroup_name();
@@ -1142,7 +1246,13 @@ public class LoanActivityOne extends AppCompatActivity {
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                Toast.makeText(LoanActivityOne.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                Intent intent =  new Intent(LoanActivityOne.this,LoanActivityTwo.class);
+                Bundle bundle =  new Bundle();
+                bundle.putLong("id", loan_application_id);
+                bundle.putString("loan_application_no",loan_application_no.getText().toString());
+                intent.putExtras(bundle);
+                startActivity(intent);
+               // Toast.makeText(LoanActivityOne.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override

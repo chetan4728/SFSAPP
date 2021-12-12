@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,9 +19,13 @@ import android.widget.Toast;
 import com.ingenioussys.microfinance.ApiServices.APIService;
 import com.ingenioussys.microfinance.R;
 import com.ingenioussys.microfinance.database.AppDatabase;
+import com.ingenioussys.microfinance.model.LoanApplication;
 import com.ingenioussys.microfinance.model.LoanApplicationCashFlow;
 import com.ingenioussys.microfinance.model.Result;
 import com.ingenioussys.microfinance.utility.PrefManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,7 +51,7 @@ public class LoanActivityTwo extends AppCompatActivity {
     Button back,next;
     TextView loan_no;
 
-
+    List<LoanApplicationCashFlow> loanApplicationCashFlow;
     ProgressDialog progressDialog;
     Boolean update_flag = false;
     long cash_flow_id;
@@ -386,7 +391,11 @@ public class LoanActivityTwo extends AppCompatActivity {
         });
         back = findViewById(R.id.back);
         next = findViewById(R.id.next);
-        load_form_two_data();
+        if(getIntent().getStringExtra("loan_application_no")!=null)
+        {
+            load_form_two_data();
+        }
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -457,7 +466,10 @@ public class LoanActivityTwo extends AppCompatActivity {
     public void Purchasecalculation()
     {
         int total_purchase_value = 0;
-        int total_sale_amount = Integer.parseInt(total_income.getText().toString());
+        int total_sale_amount = 0;
+        if(!total_income.getText().toString().isEmpty()) {
+            total_sale_amount = Integer.parseInt(total_income.getText().toString());
+        }
         if (purchase.getText().length() != 0)
         {
             int current = Integer.parseInt(purchase.getText().toString());
@@ -615,48 +627,120 @@ public class LoanActivityTwo extends AppCompatActivity {
 
     public void load_form_two_data()
     {
-        Toast.makeText(this, "sdfsdf"+ getIntent().getStringExtra("loan_application_no"), Toast.LENGTH_SHORT).show();
 
-        AsyncTask.execute(() -> {
-            List<LoanApplicationCashFlow> LoanApplications = new ArrayList<>();
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        okHttpClientBuilder
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        Request.Builder newRequest = request.newBuilder().header("Authorization", prefManager.getString("token"));
+                        return chain.proceed(newRequest.build());
+                    }
+                });
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER_URL)
+                .client(okHttpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIService service = retrofit.create(APIService.class);
+        Call<Result> call = service.get_loan_details(getIntent().getStringExtra("loan_application_no"));
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if (response.body().getError()) {
+                    Toast.makeText(LoanActivityTwo.this, "errror" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
 
-            LoanApplications = AppDatabase.getDatabase(LoanActivityTwo.this).loanApplicationCashFlowDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")), Integer.parseInt(prefManager.getString("branch_id")), getIntent().getStringExtra("loan_application_no"));
+                    Log.d("loans",response.body().getData().toString());
 
-            for(int i=0;i<LoanApplications.size();i++)
-            {
-                Log.d("total",LoanApplications.get(i).getLoan_application_number());
+
+                    try {
+                        JSONArray jsonarray = new JSONArray(response.body().getData().toString());
+                        update_flag = true;
+                        loan_no.setText(jsonarray.getJSONObject(0).getString("loan_application_number"));
+                        cash_flow_id = jsonarray.getJSONObject(0).getInt("loan_application_cash_flow_id");
+                        opening_bal.setText(jsonarray.getJSONObject(0).getString("opening_bal"));
+                        sale_amount.setText(jsonarray.getJSONObject(0).getString("sale_amount"));
+                        asset_sale.setText(jsonarray.getJSONObject(0).getString("asset_sale"));
+                        deb_receipts.setText(jsonarray.getJSONObject(0).getString("deb_receipts"));
+                        family_income.setText(jsonarray.getJSONObject(0).getString("family_income"));
+                        other_income.setText(jsonarray.getJSONObject(0).getString("other_income"));
+                        total_income.setText(jsonarray.getJSONObject(0).getString("total_income"));
+                        purchase.setText(jsonarray.getJSONObject(0).getString("purchase"));
+                        accountant_fees.setText(jsonarray.getJSONObject(0).getString("accountant_fees"));
+                        solicitor_fees.setText(jsonarray.getJSONObject(0).getString("solicitor_fees"));
+                        advertisement_and_marketing.setText(jsonarray.getJSONObject(0).getString("advertisement_and_marketing"));
+                        bank_charges.setText(jsonarray.getJSONObject(0).getString("bank_charges"));
+                        interest_paid.setText(jsonarray.getJSONObject(0).getString("interest_paid"));
+                        credit_card_fees.setText(jsonarray.getJSONObject(0).getString("credit_card_fees"));
+                        utilities.setText(jsonarray.getJSONObject(0).getString("utilities"));
+                        Loan.setText(jsonarray.getJSONObject(0).getString("Loan"));
+                        rents_rates.setText(jsonarray.getJSONObject(0).getString("rents_rates"));
+                        repair_maintenance.setText(jsonarray.getJSONObject(0).getString("repair_maintenance"));
+                        stationary_printing.setText(jsonarray.getJSONObject(0).getString("stationary_printing"));
+                        licensing.setText(jsonarray.getJSONObject(0).getString("licensing"));
+                        income_tax.setText(jsonarray.getJSONObject(0).getString("income_tax"));
+                        wages.setText(jsonarray.getJSONObject(0).getString("wages"));
+                        outgoing_amount.setText(jsonarray.getJSONObject(0).getString("outgoing_amount"));
+                        current_bal.setText(jsonarray.getJSONObject(0).getString("current_bal"));
+                        motor_vehicle_ex.setText(jsonarray.getJSONObject(0).getString("motor_vehicle_ex"));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                progressDialog.dismiss();
             }
-            if(LoanApplications.size() > 0) {
-                update_flag = true;
-                loan_no.setText(LoanApplications.get(0).getLoan_application_number());
-                cash_flow_id = LoanApplications.get(0).getLoan_application_cash_flow_id();
-                opening_bal.setText(LoanApplications.get(0).getOpening_bal());
-                sale_amount.setText(LoanApplications.get(0).getSale_amount());
-                asset_sale.setText(LoanApplications.get(0).getAsset_sale());
-                deb_receipts.setText(LoanApplications.get(0).getDeb_receipts());
-                family_income.setText(LoanApplications.get(0).getFamily_income());
-                other_income.setText(LoanApplications.get(0).getOther_income());
-                total_income.setText(LoanApplications.get(0).getTotal_income());
-                purchase.setText(LoanApplications.get(0).getPurchase());
-                accountant_fees.setText(LoanApplications.get(0).getAccountant_fees());
-                solicitor_fees.setText(LoanApplications.get(0).getSolicitor_fees());
-                advertisement_and_marketing.setText(LoanApplications.get(0).getAdvertisement_and_marketing());
-                bank_charges.setText(LoanApplications.get(0).getBank_charges());
-                interest_paid.setText(LoanApplications.get(0).getInterest_paid());
-                credit_card_fees.setText(LoanApplications.get(0).getCredit_card_fees());
-                utilities.setText(LoanApplications.get(0).getUtilities());
-                Loan.setText(LoanApplications.get(0).getLoan());
-                rents_rates.setText(LoanApplications.get(0).getRents_rates());
-                repair_maintenance.setText(LoanApplications.get(0).getRepair_maintenance());
-                stationary_printing.setText(LoanApplications.get(0).getStationary_printing());
-                licensing.setText(LoanApplications.get(0).getLicensing());
-                income_tax.setText(LoanApplications.get(0).getIncome_tax());
-                wages.setText(LoanApplications.get(0).getWages());
-                outgoing_amount.setText(LoanApplications.get(0).getOutgoing_amount());
-                current_bal.setText(LoanApplications.get(0).getCurrent_bal());
-                motor_vehicle_ex.setText(LoanApplications.get(0).getMotor_vehicle_ex());
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(LoanActivityTwo.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+       // Toast.makeText(this, "sdfsdf"+ getIntent().getStringExtra("loan_application_no"), Toast.LENGTH_SHORT).show();
+
+//        AsyncTask.execute(() -> {
+//            List<LoanApplicationCashFlow> LoanApplications = new ArrayList<>();
+//
+//            LoanApplications = AppDatabase.getDatabase(LoanActivityTwo.this).loanApplicationCashFlowDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")), Integer.parseInt(prefManager.getString("branch_id")), getIntent().getStringExtra("loan_application_no"));
+//
+//            for(int i=0;i<LoanApplications.size();i++)
+//            {
+//                Log.d("total",LoanApplications.get(i).getLoan_application_number());
+//            }
+//            if(LoanApplications.size() > 0) {
+//                update_flag = true;
+//                loan_no.setText(LoanApplications.get(0).getLoan_application_number());
+//                cash_flow_id = LoanApplications.get(0).getLoan_application_cash_flow_id();
+//                opening_bal.setText(LoanApplications.get(0).getOpening_bal());
+//                sale_amount.setText(LoanApplications.get(0).getSale_amount());
+//                asset_sale.setText(LoanApplications.get(0).getAsset_sale());
+//                deb_receipts.setText(LoanApplications.get(0).getDeb_receipts());
+//                family_income.setText(LoanApplications.get(0).getFamily_income());
+//                other_income.setText(LoanApplications.get(0).getOther_income());
+//                total_income.setText(LoanApplications.get(0).getTotal_income());
+//                purchase.setText(LoanApplications.get(0).getPurchase());
+//                accountant_fees.setText(LoanApplications.get(0).getAccountant_fees());
+//                solicitor_fees.setText(LoanApplications.get(0).getSolicitor_fees());
+//                advertisement_and_marketing.setText(LoanApplications.get(0).getAdvertisement_and_marketing());
+//                bank_charges.setText(LoanApplications.get(0).getBank_charges());
+//                interest_paid.setText(LoanApplications.get(0).getInterest_paid());
+//                credit_card_fees.setText(LoanApplications.get(0).getCredit_card_fees());
+//                utilities.setText(LoanApplications.get(0).getUtilities());
+//                Loan.setText(LoanApplications.get(0).getLoan());
+//                rents_rates.setText(LoanApplications.get(0).getRents_rates());
+//                repair_maintenance.setText(LoanApplications.get(0).getRepair_maintenance());
+//                stationary_printing.setText(LoanApplications.get(0).getStationary_printing());
+//                licensing.setText(LoanApplications.get(0).getLicensing());
+//                income_tax.setText(LoanApplications.get(0).getIncome_tax());
+//                wages.setText(LoanApplications.get(0).getWages());
+//                outgoing_amount.setText(LoanApplications.get(0).getOutgoing_amount());
+//                current_bal.setText(LoanApplications.get(0).getCurrent_bal());
+//                motor_vehicle_ex.setText(LoanApplications.get(0).getMotor_vehicle_ex());
+//            }
+//        });
 
 
     }
@@ -827,40 +911,43 @@ public class LoanActivityTwo extends AppCompatActivity {
             loanApplication.setBank_id(Integer.parseInt(prefManager.getString("bank_id")));
             loanApplication.setBranch_id(Integer.parseInt(prefManager.getString("branch_id")));
             loanApplication.setCreated_by(Integer.parseInt(prefManager.getString("employee_id")));
-            progressDialog.show();
-
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            AsyncTask.execute(() -> {
-                                AppDatabase.getDatabase(LoanActivityTwo.this).loanApplicationCashFlowDao().update(loanApplication);
-                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new android.os.Handler().postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                        progressDialog.dismiss();
-                                                        UpdateRowToServer(getIntent().getLongExtra("id",0));
-                                                        Intent intent =  new Intent(LoanActivityTwo.this,LoanActivityFour.class);
-                                                        Bundle bundle =  new Bundle();
-                                                        bundle.putLong("id",getIntent().getLongExtra("id",0));
-                                                        bundle.putString("loan_application_no",getIntent().getStringExtra("loan_application_no"));
-                                                        intent.putExtras(bundle);
-                                                        startActivity(intent);
-                                                    }
-                                                },
-                                                1000);
-                                    }
-                                });
-
-
-
-                            });
-                        }
-                    },
-                    2000);
+           // progressDialog.show();
+            loanApplicationCashFlow =  new ArrayList<>();
+            loanApplicationCashFlow.add(loanApplication);
+            UpdateToserver(loanApplicationCashFlow);
+       
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            AsyncTask.execute(() -> {
+//                                AppDatabase.getDatabase(LoanActivityTwo.this).loanApplicationCashFlowDao().update(loanApplication);
+//                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        new android.os.Handler().postDelayed(
+//                                                new Runnable() {
+//                                                    public void run() {
+//                                                        progressDialog.dismiss();
+//                                                        UpdateRowToServer(getIntent().getLongExtra("id",0));
+//                                                        Intent intent =  new Intent(LoanActivityTwo.this,LoanActivityFour.class);
+//                                                        Bundle bundle =  new Bundle();
+//                                                        bundle.putLong("id",getIntent().getLongExtra("id",0));
+//                                                        bundle.putString("loan_application_no",getIntent().getStringExtra("loan_application_no"));
+//                                                        intent.putExtras(bundle);
+//                                                        startActivity(intent);
+//                                                    }
+//                                                },
+//                                                1000);
+//                                    }
+//                                });
+//
+//
+//
+//                            });
+//                        }
+//                    },
+//                    2000);
 
         }
     }
@@ -891,7 +978,7 @@ public class LoanActivityTwo extends AppCompatActivity {
             LoanApplications =   AppDatabase.getDatabase(LoanActivityTwo.this).loanApplicationCashFlowDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")),Integer.parseInt(prefManager.getString("branch_id")),getIntent().getStringExtra("loan_application_no"));
             //  Log.d("sdfsdfsdfsd",LoanApplications.get(0).getApplicant_name());
             if(LoanApplications.size()>0) {
-                SubmitSurveyServer(LoanApplications,last_inserted_id);
+                SubmitSurveyServer(LoanApplications);
             }
 
         });
@@ -899,7 +986,7 @@ public class LoanActivityTwo extends AppCompatActivity {
 
     }
 
-    public void SubmitSurveyServer(List<LoanApplicationCashFlow> loanApplication,long last_inserted_id)
+    public void SubmitSurveyServer(List<LoanApplicationCashFlow> loanApplication)
     {
         //progressDialog.show();
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
@@ -925,7 +1012,12 @@ public class LoanActivityTwo extends AppCompatActivity {
                 //  Log.d("testadfasdf", response.message());
                 // Log.d("loanMe", String.valueOf(response.body().getMessage()));
 
-
+                Intent intent =  new Intent(LoanActivityTwo.this,LoanActivityFour.class);
+                Bundle bundle =  new Bundle();
+                bundle.putLong("id",getIntent().getLongExtra("id",0));
+                bundle.putString("loan_application_no",getIntent().getStringExtra("loan_application_no"));
+                intent.putExtras(bundle);
+                startActivity(intent);
 
                 //  ((LoanApplicationForm) getActivity()).selectIndex(1,loanApplication.get(0).getLoan_application_id());
             }
@@ -963,8 +1055,15 @@ public class LoanActivityTwo extends AppCompatActivity {
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                  Log.d("testadfasdf", response.body().getMessage());
-                Toast.makeText(LoanActivityTwo.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                Intent intent =  new Intent(LoanActivityTwo.this,LoanActivityFour.class);
+                Bundle bundle =  new Bundle();
+                bundle.putLong("id",getIntent().getLongExtra("id",0));
+                bundle.putString("loan_application_no",getIntent().getStringExtra("loan_application_no"));
+                intent.putExtras(bundle);
+                startActivity(intent);
+                  //Log.d("testadfasdf", response.body().getMessage());
+                //Toast.makeText(LoanActivityTwo.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -1141,41 +1240,43 @@ public class LoanActivityTwo extends AppCompatActivity {
             loanApplication.setBank_id(Integer.parseInt(prefManager.getString("bank_id")));
             loanApplication.setBranch_id(Integer.parseInt(prefManager.getString("branch_id")));
             loanApplication.setCreated_by(Integer.parseInt(prefManager.getString("employee_id")));
-            progressDialog.show();
+            loanApplicationCashFlow =  new ArrayList<>();
+            loanApplicationCashFlow.add(loanApplication);
+            SubmitSurveyServer(loanApplicationCashFlow);
 
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            AsyncTask.execute(() -> {
-                               long last_inserted_id =    AppDatabase.getDatabase(LoanActivityTwo.this).loanApplicationCashFlowDao().insert(loanApplication);
-                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new android.os.Handler().postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                         //Toast.makeText(LoanActivityTwo.this, ""+last_inserted_id, Toast.LENGTH_SHORT).show();
-                                                        insertRowToServer(last_inserted_id);
-                                                        progressDialog.dismiss();
-                                                        Intent intent =  new Intent(LoanActivityTwo.this,LoanActivityFour.class);
-                                                        Bundle bundle =  new Bundle();
-                                                        bundle.putLong("id",getIntent().getLongExtra("id",0));
-                                                        bundle.putString("loan_application_no",getIntent().getStringExtra("loan_application_no"));
-                                                        intent.putExtras(bundle);
-                                                        startActivity(intent);
-                                                    }
-                                                },
-                                                1000);
-                                    }
-                                });
-
-
-
-                            });
-                        }
-                    },
-                    2000);
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            AsyncTask.execute(() -> {
+//                               long last_inserted_id =    AppDatabase.getDatabase(LoanActivityTwo.this).loanApplicationCashFlowDao().insert(loanApplication);
+//                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        new android.os.Handler().postDelayed(
+//                                                new Runnable() {
+//                                                    public void run() {
+//                                                         //Toast.makeText(LoanActivityTwo.this, ""+last_inserted_id, Toast.LENGTH_SHORT).show();
+//                                                        insertRowToServer(last_inserted_id);
+//                                                        progressDialog.dismiss();
+//                                                        Intent intent =  new Intent(LoanActivityTwo.this,LoanActivityFour.class);
+//                                                        Bundle bundle =  new Bundle();
+//                                                        bundle.putLong("id",getIntent().getLongExtra("id",0));
+//                                                        bundle.putString("loan_application_no",getIntent().getStringExtra("loan_application_no"));
+//                                                        intent.putExtras(bundle);
+//                                                        startActivity(intent);
+//                                                    }
+//                                                },
+//                                                1000);
+//                                    }
+//                                });
+//
+//
+//
+//                            });
+//                        }
+//                    },
+//                    2000);
 
 
         }

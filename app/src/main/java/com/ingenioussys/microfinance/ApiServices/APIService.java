@@ -97,6 +97,10 @@ public interface APIService {
     Call<Result> SubmitSurvey(@Body List<Survey> survey);
 
 
+    @FormUrlEncoded
+    @POST("api/Android/LoadLoanApplications")
+    Call<Result> LoadLoanApplications(@Field("bank_id") String bank_id,@Field("employee_id") String employee_id);
+
     @POST("api/Android/SubmitLoanApplication")
     Call<Result> SubmitLoanApplication(@Body List<LoanApplication> survey);
 
@@ -183,6 +187,10 @@ public interface APIService {
     @FormUrlEncoded
     @POST("api/Android/get_loan_emi_employee_details")
     Call<Result> get_loan_emi_employee_details(@Field("laon_application_no") String laon_application_no);
+
+    @FormUrlEncoded
+    @POST("api/Android/get_loan_details")
+    Call<Result> get_loan_details(@Field("laon_application_no") String laon_application_no);
 
     @FormUrlEncoded
     @POST("api/Android/approve_loan_application_filed_manager")

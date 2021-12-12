@@ -7,6 +7,16 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "manage_loan_application")
 public class LoanApplication {
 
+    String member_photo_pr;
+
+    public String getMember_photo_pr() {
+        return member_photo_pr;
+    }
+
+    public void setMember_photo_pr(String member_photo_pr) {
+        this.member_photo_pr = member_photo_pr;
+    }
+
     @ColumnInfo(name = "active")
     private boolean active;
 

@@ -27,12 +27,16 @@ import com.ingenioussys.microfinance.Activites.GroupManager.LoanApplication.Loan
 import com.ingenioussys.microfinance.ApiServices.APIService;
 import com.ingenioussys.microfinance.R;
 import com.ingenioussys.microfinance.database.AppDatabase;
+import com.ingenioussys.microfinance.model.LoanApplicationCashFlow;
 import com.ingenioussys.microfinance.model.LoanApplicationDocument;
 import com.ingenioussys.microfinance.model.Result;
 import com.ingenioussys.microfinance.utility.PrefManager;
 import com.jaiselrahman.hintspinner.HintSpinner;
 import com.jaiselrahman.hintspinner.HintSpinnerAdapter;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -74,6 +78,7 @@ public class LoanActivityFour extends AppCompatActivity {
     ArrayList<String> relation_array = new ArrayList<>();;
     ArrayList<String> relation_array1 = new ArrayList<>();;
     ArrayList<String> loan_purpose_array = new ArrayList<>();;
+    List<LoanApplicationDocument> loanApplicationDocuments;
     LoanApplicationDocument     loanApplicationsave =  new LoanApplicationDocument();
     LoanApplicationDocument     loanApplicationUpdate =  new LoanApplicationDocument();
     Map<String, RequestBody> map = new HashMap<>();
@@ -538,7 +543,7 @@ public class LoanActivityFour extends AppCompatActivity {
 
     private void UpdateDocument() {
 
-        Toast.makeText(this, ""+family_relation1_value, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, ""+family_relation1_value, Toast.LENGTH_SHORT).show();
         if(co_name.getText().toString().isEmpty())
         {
             co_name.setError("Please Enter Co Applicant Name");
@@ -643,200 +648,379 @@ public class LoanActivityFour extends AppCompatActivity {
             loanApplicationUpdate.setCreated_by(Integer.parseInt(prefManager.getString("employee_id")));
 
 
-
-
+            loanApplicationDocuments =  new ArrayList<>();
+            loanApplicationDocuments.add(loanApplicationUpdate);
+            SubmitSurveyServer(loanApplicationDocuments);
           //  Toast.makeText(this, ""+pan_upload_string, Toast.LENGTH_SHORT).show();
 
-            progressDialog.show();
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            AsyncTask.execute(() -> {
-                                AppDatabase.getDatabase(LoanActivityFour.this).loanApplicationDocumentsDao().update(loanApplicationUpdate);
-                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new android.os.Handler().postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                        progressDialog.dismiss();
-                                                        UpdateRowToServer(getIntent().getLongExtra("id",0));
-                                                        Intent intent =  new Intent(LoanActivityFour.this, LoanTransactionActivity.class);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                        startActivity(intent);
-                                                    }
-                                                },
-                                                1000);
-                                    }
-                                });
-
-
-
-                            });
-                        }
-                    },
-                    2000);
+//            progressDialog.show();
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            AsyncTask.execute(() -> {
+//                                AppDatabase.getDatabase(LoanActivityFour.this).loanApplicationDocumentsDao().update(loanApplicationUpdate);
+//                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        new android.os.Handler().postDelayed(
+//                                                new Runnable() {
+//                                                    public void run() {
+//                                                        progressDialog.dismiss();
+//                                                        UpdateRowToServer(getIntent().getLongExtra("id",0));
+//                                                        Intent intent =  new Intent(LoanActivityFour.this, LoanTransactionActivity.class);
+//                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                                        startActivity(intent);
+//                                                    }
+//                                                },
+//                                                1000);
+//                                    }
+//                                });
+//
+//
+//
+//                            });
+//                        }
+//                    },
+//                    2000);
         }
 
     }
     public void load_form_two_data()
     {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                LoanApplications = AppDatabase.getDatabase(LoanActivityFour.this).loanApplicationDocumentsDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")), Integer.parseInt(prefManager.getString("branch_id")), getIntent().getStringExtra("loan_application_no"));
-                // add code which you want to run in background thread
 
-                runOnUiThread(new Runnable() {
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        okHttpClientBuilder
+                .addInterceptor(new Interceptor() {
                     @Override
-                    public void run() {
-
-
-                        if(LoanApplications.size() > 0) {
-
-                            //Log.d("photo_added",LoanApplications.get(0).getMember_photo_pr());
-                            update_flag = true;
-                            loan_application_documents_id = LoanApplications.get(0).getLoan_application_document_id();
-                            co_name.setText( LoanApplications.get(0).getCo_name());
-                            co_dob.setText( LoanApplications.get(0).getCo_dob());
-                            family_name1.setText(LoanApplications.get(0).getFamily_name1());
-                            family_name2.setText(LoanApplications.get(0).getFamily_name2());
-                            family_name3.setText(LoanApplications.get(0).getFamily_name3());
-                            family_name4.setText(LoanApplications.get(0).getFamily_name4());
-                            email_id.setText(LoanApplications.get(0).getEmail_id());
-                            pan_card_no.setText(LoanApplications.get(0).getPan_card_no());
-                            ration_card_no.setText(LoanApplications.get(0).getRation_card_no());
-                            nominee_age.setText(LoanApplications.get(0).getNominee_age());
-                            nominee_name.setText(LoanApplications.get(0).getNominee_name());
-                            loan_amount.setText(LoanApplications.get(0).getLoan_amount());
-                             photo_upload_string= LoanApplications.get(0).getMember_photo_pr();
-                             pan_upload_string = LoanApplications.get(0).getMember_pan_card();
-                             aadhar_upload_string = LoanApplications.get(0).getMember_adhar_card();
-                             other_upload_string = LoanApplications.get(0).getMember_other_proof();
-                             bussiness_upload_string = LoanApplications.get(0).getMember_new_business_activity();
-                             sign_upload_string = LoanApplications.get(0).getMember_photo_signature();
-
-                           // Toast.makeText(LoanActivityFour.this, ""+pan_upload_string, Toast.LENGTH_SHORT).show();
-                           File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents/" +  photo_upload_string);
-                            //Glide.with(LoanActivityFour.this).load(photo).placeholder(R.drawable.ic_survey).into(member_photo_pr);
-                            Picasso.get().load(photo).into(member_photo_pr);
-
-                            File pan_card = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + pan_upload_string);
-                           // Glide.with(LoanActivityFour.this).load(pan_card).placeholder(R.drawable.ic_survey).into(member_pan_card);
-                            Picasso.get().load(pan_card).into(member_pan_card);
-
-
-                            File adhar_card = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+ "/MicroFinance/Documents" + "/" + aadhar_upload_string);
-                           // Glide.with(LoanActivityFour.this).load(adhar_card).placeholder(R.drawable.ic_survey).into(member_adhar_card);
-
-                            Picasso.get().load(adhar_card).into(member_adhar_card);
-
-                            File other_proof = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + other_upload_string);
-                            //Glide.with(LoanActivityFour.this).load(other_proof).placeholder(R.drawable.ic_survey).into(member_other_proof);
-
-                            Picasso.get().load(other_proof).into(member_other_proof);
-
-                            File business_activity = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + bussiness_upload_string);
-                            //Glide.with(LoanActivityFour.this).load(business_activity).placeholder(R.drawable.ic_survey).into(member_new_business_activity);
-                            Picasso.get().load(business_activity).into(member_new_business_activity);
-
-                            File sign_photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + sign_upload_string);
-                            //Glide.with(LoanActivityFour.this).load(sign_photo).placeholder(R.drawable.ic_survey).into(member_photo_signature);
-
-                            Picasso.get().load(sign_photo).into(member_photo_signature);
-
-                            for(int m=0;m<relation_array1.size();m++)
-                            {
-                                //Log.d("dddddsd",LoanApplications.get(0).getFamily_name1()+"---"+ String.valueOf(relation_array1.get(m)));
-                                if(relation_array1.get(m).equals(LoanApplications.get(0).getFamily_relation1()))
-                                {
-                                    Log.d("checkded", String.valueOf(relation_array1.get(m)));
-                                    family_relation1.setSelection(m+1);
-                                }
-                            }
-
-
-                            for(int i=0;i<loan_cycle_array.size();i++)
-                            {
-                                if(loan_cycle_array.get(i).equals(LoanApplications.get(0).getLoan_cycle()))
-                                {
-                                    loan_cycle.setSelection(i+1);
-                                }
-                            }
-
-                            for(int i=0;i<marital_status_array.size();i++)
-                            {
-                                if(marital_status_array.get(i).equals(LoanApplications.get(0).getMarital_status()))
-                                {
-                                    marital_status.setSelection(i+1);
-                                }
-                            }
-
-                            for(int i=0;i<religion_array.size();i++)
-                            {
-                                if(religion_array.get(i).equals(LoanApplications.get(0).getReligion()))
-                                {
-                                    religion.setSelection(i+1);
-                                }
-                            }
-
-                            for(int i=0;i<cast_array.size();i++)
-                            {
-                                if(cast_array.get(i).equals(LoanApplications.get(0).getCast()))
-                                {
-                                    cast.setSelection(i+1);
-                                }
-                            }
-
-
-
-                            for(int i=0;i<relation_array1.size();i++)
-                            {
-                                if(relation_array1.get(i).equals(LoanApplications.get(0).getFamily_relation2()))
-                                {
-
-                                    family_relation2.setSelection(1);
-                                }
-                            }
-
-                            for(int i=0;i<relation_array1.size();i++)
-                            {
-                                if(relation_array1.get(i).equals(LoanApplications.get(0).getFamily_relation3()))
-                                {
-                                    family_relation3.setSelection(i+1);
-                                }
-                            }
-                            for(int i=0;i<relation_array1.size();i++)
-                            {
-                                if(relation_array1.get(i).equals(LoanApplications.get(0).getFamily_relation4()))
-                                {
-                                    family_relation4.setSelection(i+1);
-                                }
-                            }
-                            for(int i=0;i<loan_purpose_array.size();i++)
-                            {
-                                if(loan_purpose_array.get(i).equals(LoanApplications.get(0).getLoan_purpose()))
-                                {
-                                    loan_purpose.setSelection(i+1);
-                                }
-                            }
-
-                            for(int i=0;i<relation_array.size();i++)
-                            {
-                                if(relation_array.get(i).equals(LoanApplications.get(0).getNominee_relation()))
-                                {
-                                    nominee_relation.setSelection(i+1);
-                                }
-                            }
-
-                        }
-
-                        // add code which you want to run in main(UI) thread
+                    public okhttp3.Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        Request.Builder newRequest = request.newBuilder().header("Authorization", prefManager.getString("token"));
+                        return chain.proceed(newRequest.build());
                     }
                 });
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER_URL)
+                .client(okHttpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIService service = retrofit.create(APIService.class);
+        Call<Result> call = service.get_loan_details(getIntent().getStringExtra("loan_application_no"));
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if (response.body().getError()) {
+                    Toast.makeText(LoanActivityFour.this, "errror" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Log.d("loans",response.body().getData().toString());
+
+
+                    try {
+                        JSONArray jsonarray = new JSONArray(response.body().getData().toString());
+                        update_flag = true;
+                        loan_application_documents_id = jsonarray.getJSONObject(0).getInt("loan_application_document_id");
+                        co_name.setText(jsonarray.getJSONObject(0).getString("co_name"));
+                        co_dob.setText(jsonarray.getJSONObject(0).getString("co_dob"));
+                        family_name1.setText(jsonarray.getJSONObject(0).getString("family_name1"));
+                        family_name2.setText(jsonarray.getJSONObject(0).getString("family_name2"));
+                        family_name3.setText(jsonarray.getJSONObject(0).getString("family_name3"));
+                        family_name4.setText(jsonarray.getJSONObject(0).getString("family_name4"));
+                        email_id.setText(jsonarray.getJSONObject(0).getString("email_id"));
+                        pan_card_no.setText(jsonarray.getJSONObject(0).getString("pan_card_no"));
+                        ration_card_no.setText(jsonarray.getJSONObject(0).getString("ration_card_no"));
+                        nominee_age.setText(jsonarray.getJSONObject(0).getString("nominee_age"));
+                        nominee_name.setText(jsonarray.getJSONObject(0).getString("nominee_name"));
+                        loan_amount.setText(jsonarray.getJSONObject(0).getString("loan_amount"));
+                        photo_upload_string= jsonarray.getJSONObject(0).getString("member_photo_pr");
+                        pan_upload_string = jsonarray.getJSONObject(0).getString("member_pan_card");
+                        aadhar_upload_string = jsonarray.getJSONObject(0).getString("member_adhar_card");
+                        other_upload_string = jsonarray.getJSONObject(0).getString("member_other_proof");
+                        bussiness_upload_string = jsonarray.getJSONObject(0).getString("member_new_business_activity");
+                        sign_upload_string = jsonarray.getJSONObject(0).getString("member_photo_signature");
+
+                        // Toast.makeText(LoanActivityFour.this, ""+pan_upload_string, Toast.LENGTH_SHORT).show();
+                        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents/" +  photo_upload_string);
+                        //Glide.with(LoanActivityFour.this).load(photo).placeholder(R.drawable.ic_survey).into(member_photo_pr);
+                        Picasso.get().load(photo).into(member_photo_pr);
+
+                        File pan_card = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + pan_upload_string);
+                        // Glide.with(LoanActivityFour.this).load(pan_card).placeholder(R.drawable.ic_survey).into(member_pan_card);
+                        Picasso.get().load(pan_card).into(member_pan_card);
+
+
+                        File adhar_card = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+ "/MicroFinance/Documents" + "/" + aadhar_upload_string);
+                        // Glide.with(LoanActivityFour.this).load(adhar_card).placeholder(R.drawable.ic_survey).into(member_adhar_card);
+
+                        Picasso.get().load(adhar_card).into(member_adhar_card);
+
+                        File other_proof = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + other_upload_string);
+                        //Glide.with(LoanActivityFour.this).load(other_proof).placeholder(R.drawable.ic_survey).into(member_other_proof);
+
+                        Picasso.get().load(other_proof).into(member_other_proof);
+
+                        File business_activity = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + bussiness_upload_string);
+                        //Glide.with(LoanActivityFour.this).load(business_activity).placeholder(R.drawable.ic_survey).into(member_new_business_activity);
+                        Picasso.get().load(business_activity).into(member_new_business_activity);
+
+                        File sign_photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + sign_upload_string);
+                        //Glide.with(LoanActivityFour.this).load(sign_photo).placeholder(R.drawable.ic_survey).into(member_photo_signature);
+
+                        Picasso.get().load(sign_photo).into(member_photo_signature);
+
+                        for(int m=0;m<relation_array1.size();m++)
+                        {
+                            //Log.d("dddddsd",LoanApplications.get(0).getFamily_name1()+"---"+ String.valueOf(relation_array1.get(m)));
+                            if(relation_array1.get(m).equals(jsonarray.getJSONObject(0).getString("family_relation1")))
+                            {
+                                Log.d("checkded", String.valueOf(relation_array1.get(m)));
+                                family_relation1.setSelection(m+1);
+                            }
+                        }
+
+
+                        for(int i=0;i<loan_cycle_array.size();i++)
+                        {
+                            if(loan_cycle_array.get(i).equals(jsonarray.getJSONObject(0).getString("loan_cycle")))
+                            {
+                                loan_cycle.setSelection(i+1);
+                            }
+                        }
+
+                        for(int i=0;i<marital_status_array.size();i++)
+                        {
+                            if(marital_status_array.get(i).equals(jsonarray.getJSONObject(0).getString("marital_status")))
+                            {
+                                marital_status.setSelection(i+1);
+                            }
+                        }
+
+                        for(int i=0;i<religion_array.size();i++)
+                        {
+                            if(religion_array.get(i).equals(jsonarray.getJSONObject(0).getString("religion")))
+                            {
+                                religion.setSelection(i+1);
+                            }
+                        }
+
+                        for(int i=0;i<cast_array.size();i++)
+                        {
+                            if(cast_array.get(i).equals(jsonarray.getJSONObject(0).getString("cast")))
+                            {
+                                cast.setSelection(i+1);
+                            }
+                        }
+
+
+
+                        for(int i=0;i<relation_array1.size();i++)
+                        {
+                            if(relation_array1.get(i).equals(jsonarray.getJSONObject(0).getString("family_relation2")))
+                            {
+
+                                family_relation2.setSelection(1);
+                            }
+                        }
+
+                        for(int i=0;i<relation_array1.size();i++)
+                        {
+                            if(relation_array1.get(i).equals(jsonarray.getJSONObject(0).getString("family_relation3")))
+                            {
+                                family_relation3.setSelection(i+1);
+                            }
+                        }
+                        for(int i=0;i<relation_array1.size();i++)
+                        {
+                            if(relation_array1.get(i).equals(jsonarray.getJSONObject(0).getString("family_relation4")))
+                            {
+                                family_relation4.setSelection(i+1);
+                            }
+                        }
+                        for(int i=0;i<loan_purpose_array.size();i++)
+                        {
+                            if(loan_purpose_array.get(i).equals(jsonarray.getJSONObject(0).getString("loan_purpose")))
+                            {
+                                loan_purpose.setSelection(i+1);
+                            }
+                        }
+
+                        for(int i=0;i<relation_array.size();i++)
+                        {
+                            if(relation_array.get(i).equals(jsonarray.getJSONObject(0).getString("nominee_relation")))
+                            {
+                                nominee_relation.setSelection(i+1);
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(LoanActivityFour.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+//        AsyncTask.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                LoanApplications = AppDatabase.getDatabase(LoanActivityFour.this).loanApplicationDocumentsDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")), Integer.parseInt(prefManager.getString("branch_id")), getIntent().getStringExtra("loan_application_no"));
+//                // add code which you want to run in background thread
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//
+//                        if(LoanApplications.size() > 0) {
+//
+//                            //Log.d("photo_added",LoanApplications.get(0).getMember_photo_pr());
+//                            update_flag = true;
+//                            loan_application_documents_id = LoanApplications.get(0).getLoan_application_document_id();
+//                            co_name.setText( LoanApplications.get(0).getCo_name());
+//                            co_dob.setText( LoanApplications.get(0).getCo_dob());
+//                            family_name1.setText(LoanApplications.get(0).getFamily_name1());
+//                            family_name2.setText(LoanApplications.get(0).getFamily_name2());
+//                            family_name3.setText(LoanApplications.get(0).getFamily_name3());
+//                            family_name4.setText(LoanApplications.get(0).getFamily_name4());
+//                            email_id.setText(LoanApplications.get(0).getEmail_id());
+//                            pan_card_no.setText(LoanApplications.get(0).getPan_card_no());
+//                            ration_card_no.setText(LoanApplications.get(0).getRation_card_no());
+//                            nominee_age.setText(LoanApplications.get(0).getNominee_age());
+//                            nominee_name.setText(LoanApplications.get(0).getNominee_name());
+//                            loan_amount.setText(LoanApplications.get(0).getLoan_amount());
+//                             photo_upload_string= LoanApplications.get(0).getMember_photo_pr();
+//                             pan_upload_string = LoanApplications.get(0).getMember_pan_card();
+//                             aadhar_upload_string = LoanApplications.get(0).getMember_adhar_card();
+//                             other_upload_string = LoanApplications.get(0).getMember_other_proof();
+//                             bussiness_upload_string = LoanApplications.get(0).getMember_new_business_activity();
+//                             sign_upload_string = LoanApplications.get(0).getMember_photo_signature();
+//
+//                           // Toast.makeText(LoanActivityFour.this, ""+pan_upload_string, Toast.LENGTH_SHORT).show();
+//                           File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents/" +  photo_upload_string);
+//                            //Glide.with(LoanActivityFour.this).load(photo).placeholder(R.drawable.ic_survey).into(member_photo_pr);
+//                            Picasso.get().load(photo).into(member_photo_pr);
+//
+//                            File pan_card = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + pan_upload_string);
+//                           // Glide.with(LoanActivityFour.this).load(pan_card).placeholder(R.drawable.ic_survey).into(member_pan_card);
+//                            Picasso.get().load(pan_card).into(member_pan_card);
+//
+//
+//                            File adhar_card = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)+ "/MicroFinance/Documents" + "/" + aadhar_upload_string);
+//                           // Glide.with(LoanActivityFour.this).load(adhar_card).placeholder(R.drawable.ic_survey).into(member_adhar_card);
+//
+//                            Picasso.get().load(adhar_card).into(member_adhar_card);
+//
+//                            File other_proof = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + other_upload_string);
+//                            //Glide.with(LoanActivityFour.this).load(other_proof).placeholder(R.drawable.ic_survey).into(member_other_proof);
+//
+//                            Picasso.get().load(other_proof).into(member_other_proof);
+//
+//                            File business_activity = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + bussiness_upload_string);
+//                            //Glide.with(LoanActivityFour.this).load(business_activity).placeholder(R.drawable.ic_survey).into(member_new_business_activity);
+//                            Picasso.get().load(business_activity).into(member_new_business_activity);
+//
+//                            File sign_photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents" + "/" + sign_upload_string);
+//                            //Glide.with(LoanActivityFour.this).load(sign_photo).placeholder(R.drawable.ic_survey).into(member_photo_signature);
+//
+//                            Picasso.get().load(sign_photo).into(member_photo_signature);
+//
+//                            for(int m=0;m<relation_array1.size();m++)
+//                            {
+//                                //Log.d("dddddsd",LoanApplications.get(0).getFamily_name1()+"---"+ String.valueOf(relation_array1.get(m)));
+//                                if(relation_array1.get(m).equals(LoanApplications.get(0).getFamily_relation1()))
+//                                {
+//                                    Log.d("checkded", String.valueOf(relation_array1.get(m)));
+//                                    family_relation1.setSelection(m+1);
+//                                }
+//                            }
+//
+//
+//                            for(int i=0;i<loan_cycle_array.size();i++)
+//                            {
+//                                if(loan_cycle_array.get(i).equals(LoanApplications.get(0).getLoan_cycle()))
+//                                {
+//                                    loan_cycle.setSelection(i+1);
+//                                }
+//                            }
+//
+//                            for(int i=0;i<marital_status_array.size();i++)
+//                            {
+//                                if(marital_status_array.get(i).equals(LoanApplications.get(0).getMarital_status()))
+//                                {
+//                                    marital_status.setSelection(i+1);
+//                                }
+//                            }
+//
+//                            for(int i=0;i<religion_array.size();i++)
+//                            {
+//                                if(religion_array.get(i).equals(LoanApplications.get(0).getReligion()))
+//                                {
+//                                    religion.setSelection(i+1);
+//                                }
+//                            }
+//
+//                            for(int i=0;i<cast_array.size();i++)
+//                            {
+//                                if(cast_array.get(i).equals(LoanApplications.get(0).getCast()))
+//                                {
+//                                    cast.setSelection(i+1);
+//                                }
+//                            }
+//
+//
+//
+//                            for(int i=0;i<relation_array1.size();i++)
+//                            {
+//                                if(relation_array1.get(i).equals(LoanApplications.get(0).getFamily_relation2()))
+//                                {
+//
+//                                    family_relation2.setSelection(1);
+//                                }
+//                            }
+//
+//                            for(int i=0;i<relation_array1.size();i++)
+//                            {
+//                                if(relation_array1.get(i).equals(LoanApplications.get(0).getFamily_relation3()))
+//                                {
+//                                    family_relation3.setSelection(i+1);
+//                                }
+//                            }
+//                            for(int i=0;i<relation_array1.size();i++)
+//                            {
+//                                if(relation_array1.get(i).equals(LoanApplications.get(0).getFamily_relation4()))
+//                                {
+//                                    family_relation4.setSelection(i+1);
+//                                }
+//                            }
+//                            for(int i=0;i<loan_purpose_array.size();i++)
+//                            {
+//                                if(loan_purpose_array.get(i).equals(LoanApplications.get(0).getLoan_purpose()))
+//                                {
+//                                    loan_purpose.setSelection(i+1);
+//                                }
+//                            }
+//
+//                            for(int i=0;i<relation_array.size();i++)
+//                            {
+//                                if(relation_array.get(i).equals(LoanApplications.get(0).getNominee_relation()))
+//                                {
+//                                    nominee_relation.setSelection(i+1);
+//                                }
+//                            }
+//
+//                        }
+//
+//                        // add code which you want to run in main(UI) thread
+//                    }
+//                });
+//            }
+//        });
 
       //  File photo = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/MicroFinance/Documents" + "/profile_6ad9e910-a970-401a-85a2-bd41c38d9c8a.jpg");
         //Glide.with(LoanActivityFour.this).load(photo).placeholder(R.drawable.ic_survey).into(member_photo_pr);
@@ -986,38 +1170,41 @@ public class LoanActivityFour extends AppCompatActivity {
             loanApplicationsave.setBank_id(Integer.parseInt(prefManager.getString("bank_id")));
             loanApplicationsave.setBranch_id(Integer.parseInt(prefManager.getString("branch_id")));
             loanApplicationsave.setCreated_by(Integer.parseInt(prefManager.getString("employee_id")));
-            progressDialog.show();
 
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            AsyncTask.execute(() -> {
-                                AppDatabase.getDatabase(LoanActivityFour.this).loanApplicationDocumentsDao().insert(loanApplicationsave);
-                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new android.os.Handler().postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                        progressDialog.dismiss();
-                                                        insertRowToServer(getIntent().getLongExtra("id",0));
-                                                        Intent intent =  new Intent(LoanActivityFour.this, LoanTransactionActivity.class);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                        startActivity(intent);
+            loanApplicationDocuments =  new ArrayList<>();
+            loanApplicationDocuments.add(loanApplicationUpdate);
+            UpdateToserver(loanApplicationDocuments);
 
-                                                    }
-                                                },
-                                                1000);
-                                    }
-                                });
-
-
-
-                            });
-                        }
-                    },
-                    2000);
+//            new android.os.Handler().postDelayed(
+//                    new Runnable() {
+//                        public void run() {
+//                            AsyncTask.execute(() -> {
+//                                AppDatabase.getDatabase(LoanActivityFour.this).loanApplicationDocumentsDao().insert(loanApplicationsave);
+//                                // Log.d("last_inserted_id", String.valueOf(last_inserted_id));
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        new android.os.Handler().postDelayed(
+//                                                new Runnable() {
+//                                                    public void run() {
+//                                                        progressDialog.dismiss();
+//                                                        insertRowToServer(getIntent().getLongExtra("id",0));
+//                                                        Intent intent =  new Intent(LoanActivityFour.this, LoanTransactionActivity.class);
+//                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                                        startActivity(intent);
+//
+//                                                    }
+//                                                },
+//                                                1000);
+//                                    }
+//                                });
+//
+//
+//
+//                            });
+//                        }
+//                    },
+//                    2000);
         }
 
     }
@@ -1241,14 +1428,14 @@ public class LoanActivityFour extends AppCompatActivity {
             LoanApplications =   AppDatabase.getDatabase(LoanActivityFour.this).loanApplicationDocumentsDao().getSingle(Integer.parseInt(prefManager.getString("employee_id")),Integer.parseInt(prefManager.getString("branch_id")),getIntent().getStringExtra("loan_application_no"));
             //  Log.d("sdfsdfsdfsd",LoanApplications.get(0).getApplicant_name());
             if(LoanApplications.size()>0) {
-                SubmitSurveyServer(LoanApplications,last_inserted_id);
+                SubmitSurveyServer(LoanApplications);
             }
 
         });
 
 
     }
-    public void SubmitSurveyServer(List<LoanApplicationDocument> loanApplication,long last_inserted_id)
+    public void SubmitSurveyServer(List<LoanApplicationDocument> loanApplication)
     {
         //progressDialog.show();
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();

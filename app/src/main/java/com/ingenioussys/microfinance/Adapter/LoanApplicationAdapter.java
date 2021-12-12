@@ -2,11 +2,14 @@ package com.ingenioussys.microfinance.Adapter;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ingenioussys.microfinance.Activites.GroupManager.LoanApplication.LoanTransactionActivity;
 import com.ingenioussys.microfinance.R;
@@ -14,7 +17,9 @@ import com.ingenioussys.microfinance.database.AppDatabase;
 import com.ingenioussys.microfinance.model.Center;
 import com.ingenioussys.microfinance.model.Group;
 import com.ingenioussys.microfinance.model.LoanApplication;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +63,11 @@ public class LoanApplicationAdapter extends BaseAdapter {
         applicant_name.setText(loanApplication.getApplicant_name());
         group_center_name.setText(loanApplication.getApplicant_name());
         created_date.setText(loanApplication.getCreated_date());
-
+        File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents/" +  loanApplication.getMember_photo_pr());
+        //Glide.with(LoanActivityFour.this).load(photo).placeholder(R.drawable.ic_survey).into(member_photo_pr);
+        ImageView profile_pic =  view.findViewById(R.id.profile_pic);
+        //Toast.makeText(context, ""+photo, Toast.LENGTH_SHORT).show();
+        Picasso.get().load(photo).placeholder(R.drawable.ic_survey).into(profile_pic);
         if(loanApplication.getApproved_status()==0)
         {
             verificationStatus.setText("Pending");
