@@ -76,7 +76,11 @@ public class CollectPayment extends AppCompatActivity {
         emi_no = findViewById(R.id.emi_no);
         profile_image  = findViewById(R.id.profile_image);
         emi_lbl = findViewById(R.id.emi_lbl);
+
+      //  Toast.makeText(this, ""+getIntent().getStringExtra("loan_application_no"), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, ""+this.getIntent().getExtras().getString("emi_id"), Toast.LENGTH_SHORT).show();
         getLoanInformation();
+
         submit_emi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +136,7 @@ public class CollectPayment extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService service = retrofit.create(APIService.class);
-        Call<Result> call = service.update_emi_amount(getIntent().getStringExtra("loan_application_no"),loan_distribution_emi_id,get_emi.getText().toString());
+        Call<Result> call = service.update_emi_amount(this.getIntent().getExtras().getString("loan_application_no"),loan_distribution_emi_id,get_emi.getText().toString());
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -174,7 +178,7 @@ public class CollectPayment extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService service = retrofit.create(APIService.class);
-        Call<Result> call = service.get_loan_emi_details(getIntent().getStringExtra("loan_application_no"));
+        Call<Result> call = service.get_loan_emi_details(this.getIntent().getExtras().getString("loan_application_no"),this.getIntent().getExtras().getString("emi_id"));
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

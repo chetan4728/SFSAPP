@@ -181,7 +181,7 @@ public interface APIService {
     Call<Result> get_loan_application_list(@Field("bank_id") String bank_id, @Field("branch_id") String branch_id);
     @FormUrlEncoded
     @POST("api/Android/get_loan_emi_details")
-    Call<Result> get_loan_emi_details(@Field("laon_application_no") String laon_application_no);
+    Call<Result> get_loan_emi_details(@Field("laon_application_no") String laon_application_no,@Field("loan_distribution_emi_id") String loan_distribution_emi_id);
 
 
     @FormUrlEncoded
@@ -205,6 +205,8 @@ public interface APIService {
     @POST("api/Android/get_group_members")
     Call<Result> get_group_members(@Field("center_id") String center_id,@Field("group_id") String group_id,@Field("bank_id") String bank_id,@Field("branch_id") String branch_id);
 
-
+    @FormUrlEncoded
+    @POST("api/Android/get_loan_emi_listing")
+    Call<Result> get_loan_emi_listing(@Field("laon_application_no") String laon_application_no);
 }
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ingenioussys.microfinance.Activites.GroupManager.collection.CollectPayment;
+import com.ingenioussys.microfinance.Activites.GroupManager.collection.EmiListing;
 import com.ingenioussys.microfinance.R;
 import com.ingenioussys.microfinance.model.Item;
 import com.multilevelview.MultiLevelAdapter;
@@ -123,7 +124,7 @@ public class MyAdapter extends MultiLevelAdapter {
 
                         //set click event on item here
                         if(!mListItems.get(getAdapterPosition()).getLoan_application_no().isEmpty()) {
-                            Intent intent = new Intent(mContext, CollectPayment.class);
+                            Intent intent = new Intent(mContext, EmiListing.class);
                             intent.putExtra("loan_application_no", mListItems.get(getAdapterPosition()).getLoan_application_no());
                             mContext.startActivity(intent);
                         }
