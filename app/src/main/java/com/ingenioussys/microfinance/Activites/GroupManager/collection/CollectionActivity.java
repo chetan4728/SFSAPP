@@ -48,7 +48,7 @@ public class CollectionActivity extends AppCompatActivity {
     MultiLevelRecyclerView multiLevelRecyclerView;
     List<?> finalData;
     Button prevBtn,nextbtn;
-    private int currentPage = 1;
+    private int currentPage = 0;
     private  int limit = 25;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +123,7 @@ public class CollectionActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService service = retrofit.create(APIService.class);
-        Call<Result> call = service.get_emi_collectiondata(prefManager.getString("bank_id"),prefManager.getString("branch_id"),currentPage,limit);
+        Call<Result> call = service.get_emi_collectiondata(prefManager.getString("bank_id"),prefManager.getString("branch_id"),currentPage,limit, Integer.parseInt(prefManager.getString("employee_id")));
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
