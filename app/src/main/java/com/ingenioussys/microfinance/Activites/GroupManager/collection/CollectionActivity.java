@@ -3,8 +3,11 @@ package com.ingenioussys.microfinance.Activites.GroupManager.collection;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.ingenioussys.microfinance.Adapter.MyAdapter;
@@ -41,8 +44,12 @@ public class CollectionActivity extends AppCompatActivity {
     List<RecyclerViewItem> levelOne;
     List<RecyclerViewItem> levelTwo;
     List<RecyclerViewItem> levelThree;
+    ProgressDialog progressDialog;
     MultiLevelRecyclerView multiLevelRecyclerView;
     List<?> finalData;
+    Button prevBtn,nextbtn;
+    private int currentPage = 1;
+    private  int limit = 25;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +59,33 @@ public class CollectionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         prefManager =  new PrefManager(this);
+        progressDialog =  new ProgressDialog(this);
+        progressDialog.setMessage("Loading data..");
         multiLevelRecyclerView = (MultiLevelRecyclerView) findViewById(R.id.rv_list);
         multiLevelRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        prevBtn  = findViewById(R.id.prevBtn);
+        nextbtn  = findViewById(R.id.nextbtn);
+        nextbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentPage += 1;
+                get_collection_data(currentPage,limit);
+                Toast.makeText(CollectionActivity.this, ""+currentPage, Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        prevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentPage > 1) {
 
-        List<Item> itemList = (List<Item>) get_collection_data();
+                    currentPage -= 1;
+                    get_collection_data(currentPage,limit);
+                    Toast.makeText(CollectionActivity.this, "" + currentPage, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        get_collection_data(currentPage,limit);
 
         //JSONArray arr = new JSONArray(itemList);
 
@@ -73,10 +102,10 @@ public class CollectionActivity extends AppCompatActivity {
        // multiLevelRecyclerView.openTill(0,1,2,3);
     }
 
-    public List<?> get_collection_data()
+    public List<?> get_collection_data(int currentPage, int limit )
     {
         levelOne =  new ArrayList<>();
-
+        progressDialog.show();
 
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder
@@ -94,7 +123,7 @@ public class CollectionActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService service = retrofit.create(APIService.class);
-        Call<Result> call = service.get_emi_collectiondata(prefManager.getString("bank_id"),prefManager.getString("branch_id"));
+        Call<Result> call = service.get_emi_collectiondata(prefManager.getString("bank_id"),prefManager.getString("branch_id"),currentPage,limit);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
@@ -151,10 +180,11 @@ public class CollectionActivity extends AppCompatActivity {
                         MyAdapter myAdapter = new MyAdapter(CollectionActivity.this, finalDatalist, multiLevelRecyclerView);
                         multiLevelRecyclerView.setAdapter(myAdapter);
                     }
-
+                    progressDialog.dismiss();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressDialog.dismiss();
                 }
                 // Toast.makeText(TakeSurveyActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -166,7 +196,7 @@ public class CollectionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-
+                progressDialog.dismiss();
                 Toast.makeText(CollectionActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

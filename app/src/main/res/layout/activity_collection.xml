@@ -6,7 +6,33 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Activites.GroupManager.collection.CollectionActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/prevBtn"
+            android:layout_weight="1"
+            android:text="Previous"
+            android:background="@color/colorAccent"
+            android:padding="10dp"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+        </Button>
+
+        <Button
+            android:id="@+id/nextbtn"
+            android:text="Next"
+            android:textColor="#fff"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </Button>
+    </LinearLayout>
     <com.multilevelview.MultiLevelRecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
@@ -27,5 +53,7 @@
         android:textColor="#000"
         android:layout_height="match_parent"
         tools:ignore="RtlCompat"></TextView>
+
+
 
 </LinearLayout>

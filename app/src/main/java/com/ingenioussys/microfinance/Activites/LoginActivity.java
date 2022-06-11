@@ -145,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void _login()
     {
+       // Toast.makeText(this, ""+username.getText().toString(), Toast.LENGTH_SHORT).show();
         progressDialog.show();
         OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
         Retrofit retrofit = new Retrofit.Builder()
@@ -156,9 +157,9 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-               // Log.d("response", String.valueOf(response.body().getMessage()));
+                Log.d("response", String.valueOf(response.body().getMessage()));
                 if (response.body().getError()) {
-                    Toast.makeText(LoginActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(LoginActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
 
                     try {

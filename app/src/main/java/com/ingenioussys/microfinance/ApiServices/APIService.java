@@ -173,7 +173,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("api/Android/get_emi_collectiondata")
-    Call<Result> get_emi_collectiondata(@Field("bank_id") String bank_id, @Field("branch_id") String branch_id);
+    Call<Result> get_emi_collectiondata(@Field("bank_id") String bank_id, @Field("branch_id") String branch_id, @Field("page") int page, @Field("limit") int limit);
 
 
     @FormUrlEncoded
