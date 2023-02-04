@@ -8,6 +8,15 @@ import androidx.room.PrimaryKey;
 public class LoanApplication {
 
     String member_photo_pr;
+    String voter_id_no;
+
+    public String getVoter_id_no() {
+        return voter_id_no;
+    }
+
+    public void setVoter_id_no(String voter_id_no) {
+        this.voter_id_no = voter_id_no;
+    }
 
     public String getMember_photo_pr() {
         return member_photo_pr;

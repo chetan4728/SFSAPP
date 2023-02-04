@@ -173,12 +173,12 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("api/Android/get_emi_collectiondata")
-    Call<Result> get_emi_collectiondata(@Field("bank_id") String bank_id, @Field("branch_id") String branch_id, @Field("page") int page, @Field("limit") int limit , @Field("employee_id") int employee_id);
+    Call<Result> get_emi_collectiondata(@Field("bank_id") String bank_id, @Field("branch_id") String branch_id, @Field("page") int page, @Field("limit") int limit , @Field("employee_id") int employee_id, @Field("group_name") String group_name);
 
 
     @FormUrlEncoded
     @POST("api/Android/get_loan_application_list")
-    Call<Result> get_loan_application_list(@Field("bank_id") String bank_id, @Field("branch_id") String branch_id);
+    Call<Result> get_loan_application_list(@Field("bank_id") String bank_id, @Field("branch_id") String branch_id, @Field("page") int page, @Field("limit") int limit, @Field("employee_id") int employee_id, @Field("group_name") String group_name);
     @FormUrlEncoded
     @POST("api/Android/get_loan_emi_details")
     Call<Result> get_loan_emi_details(@Field("laon_application_no") String laon_application_no,@Field("loan_distribution_emi_id") String loan_distribution_emi_id);
@@ -199,7 +199,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("api/Android/update_emi_amount")
-    Call<Result> update_emi_amount(@Field("laon_application_no") String laon_application_no,@Field("loan_distribution_emi_id") String loan_distribution_emi_id,@Field("paid_amount") String paid_amount);
+    Call<Result> update_emi_amount(@Field("laon_application_no") String laon_application_no,@Field("loan_distribution_emi_id") String loan_distribution_emi_id,@Field("paid_amount") String paid_amount,@Field("get_saving_amount") String get_saving_amount);
 
     @FormUrlEncoded
     @POST("api/Android/get_group_members")

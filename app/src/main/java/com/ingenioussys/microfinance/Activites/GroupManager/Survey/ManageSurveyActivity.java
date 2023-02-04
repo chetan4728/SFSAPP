@@ -70,6 +70,7 @@ public class ManageSurveyActivity extends AppCompatActivity {
     Button submit;
     int area_id = 0;
     ProgressDialog progressDialog;
+    ArrayList<Survey> surveyArrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,7 +235,8 @@ public class ManageSurveyActivity extends AppCompatActivity {
     }
     public String get_survey_application_no()
     {
-        Toast.makeText(this, ""+prefManager.getString("area_id"), Toast.LENGTH_SHORT).show();
+        surveyArrayList =  new ArrayList<>();
+        //Toast.makeText(this, ""+prefManager.getString("area_id"), Toast.LENGTH_SHORT).show();
         String loanApplication_no = "";
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder
@@ -340,32 +342,32 @@ public class ManageSurveyActivity extends AppCompatActivity {
                     survey.setQuality_of_roads(""+quality_of_roads.getSelectedItem().toString());
                     survey.setNumber_of_school(number_of_school.getText().toString());
                     survey.setSurver_verfication_status(1);
+                    surveyArrayList.add(survey);
 
 
+                    progressDialog.show();
+                    SubmitSurveyServer(surveyArrayList);
 
-                   progressDialog.show();
-
-
-                    ExecutorService executor = Executors.newSingleThreadExecutor();
-                    Handler handler = new Handler(Looper.getMainLooper());
-
-                    executor.execute(() -> {
-                        //Background work here
-//                        AppDatabase.getDatabase(getApplicationContext()).surveyDao().insert(survey);
-                        progressDialog.setMessage("Saving Data please wait...");
-                        handler.post(() -> {
-                            //UI Thread work here
-                            new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                                    new Runnable() {
-                                        public void run() {
-                                            insertRowToserver(Survey_uniqe_id);
-
-                                        }
-                                    },
-                                    2000);
-
-                        });
-                    });
+//                    ExecutorService executor = Executors.newSingleThreadExecutor();
+//                    Handler handler = new Handler(Looper.getMainLooper());
+//
+//                    executor.execute(() -> {
+//                        //Background work here
+////                        AppDatabase.getDatabase(getApplicationContext()).surveyDao().insert(survey);
+//                        progressDialog.setMessage("Saving Data please wait...");
+//                        handler.post(() -> {
+//                            //UI Thread work here
+//                            new android.os.Handler(Looper.getMainLooper()).postDelayed(
+//                                    new Runnable() {
+//                                        public void run() {
+//                                            insertRowToserver(Survey_uniqe_id);
+//
+//                                        }
+//                                    },
+//                                    2000);
+//
+//                        });
+//                    });
 
 
 

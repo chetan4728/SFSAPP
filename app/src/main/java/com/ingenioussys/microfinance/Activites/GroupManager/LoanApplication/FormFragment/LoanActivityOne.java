@@ -87,7 +87,7 @@ public class LoanActivityOne extends AppCompatActivity {
     PrefManager prefManager;
     ImageView qr_scan;
     Button next;
-    EditText created_date,created_by,branch_office,applicant_name,applicant_father_name,dob,age,applicant_mob_no,loan_application_no;
+    EditText voter_id,created_date,created_by,branch_office,applicant_name,applicant_father_name,dob,age,applicant_mob_no,loan_application_no;
     EditText address,tq,dist,state,pincode,uid_no;
     AadharCard aadharData;
     ProgressDialog progressDialog;
@@ -98,7 +98,7 @@ public class LoanActivityOne extends AppCompatActivity {
     int area_id = 0;
     final Calendar myCalendar = Calendar.getInstance();
     int group_id = 0;
-    String gender_string ="";
+    String gender_string ="Female";
     HintSpinner center_name,group_name;
     TextView loan_no;
     RadioButton male,female;
@@ -136,6 +136,7 @@ public class LoanActivityOne extends AppCompatActivity {
         address =  findViewById(R.id.address);
         tq =  findViewById(R.id.tq);
         dist =  findViewById(R.id.dist);
+        voter_id = findViewById(R.id.voter_id);
         state =  findViewById(R.id.state);
         pincode =  findViewById(R.id.pincode);
         uid_no =  findViewById(R.id.uid_no);
@@ -719,6 +720,7 @@ public class LoanActivityOne extends AppCompatActivity {
             loanApplication.setPincode(pincode.getText().toString());
             loanApplication.setUid_no(uid_no.getText().toString());
             loanApplication.setCenter_id(center_id);
+            loanApplication.setVoter_id_no(voter_id.getText().toString());
             loanApplication.setGroup_id(group_id);
             loanApplication.setArea_id(Integer.parseInt(prefManager.getString("area_id")));
             loanApplication.setBank_id(Integer.parseInt(prefManager.getString("bank_id")));
@@ -898,6 +900,8 @@ public class LoanActivityOne extends AppCompatActivity {
                             loanApplication.setArea_id(Integer.parseInt(prefManager.getString("area_id")));
                             loanApplication.setCenter_id(center_id);
                             loanApplication.setGroup_id(group_id);
+
+                            loanApplication.setVoter_id_no(voter_id.getText().toString());
                             loanApplication.setActive(false);
                                             loanApplication.setArea_id(Integer.parseInt(prefManager.getString("area_id")));
                                             loanApplication.setBank_id(Integer.parseInt(prefManager.getString("bank_id")));
@@ -1287,8 +1291,8 @@ public class LoanActivityOne extends AppCompatActivity {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 //  Log.d("testadfasdf", response.message());
-               // Log.d("loanMe", String.valueOf(response.body().getMessage()));
-                Log.d("loanMe", String.valueOf(response.body().getData()));
+                //Log.d("loanMe", String.valueOf(response.body().getMessage()));
+                //Log.d("loanMe", String.valueOf(response.body().getData()));
                 Intent intent =  new Intent(LoanActivityOne.this,LoanActivityTwo.class);
                 Bundle bundle =  new Bundle();
                 bundle.putLong("id", loan_application_id);

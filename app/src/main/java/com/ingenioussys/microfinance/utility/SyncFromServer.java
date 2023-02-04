@@ -676,7 +676,7 @@ public class SyncFromServer {
                             survey.setSurvey_uniqe_id(jsonarray.getJSONObject(i).getString("survey_uniqe_id"));
                             survey.setSurvey_id(jsonarray.getJSONObject(i).getInt("survey_id"));
                             survey.setArea_id(jsonarray.getJSONObject(i).getInt("area_id"));
-                            survey.setSurvey_area_name(jsonarray.getJSONObject(i).getString("area_name"));
+                            //survey.setSurvey_area_name(jsonarray.getJSONObject(i).getString("area_name"));
                             survey.setBranch_id(jsonarray.getJSONObject(i).getInt("branch_id"));
                             survey.setSurvey_created_by(jsonarray.getJSONObject(i).getInt("survey_created_by"));
                             survey.setMbb_name(jsonarray.getJSONObject(i).getString("mbb_name"));

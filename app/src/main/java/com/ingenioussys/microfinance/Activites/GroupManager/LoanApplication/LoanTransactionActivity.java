@@ -113,7 +113,8 @@ public class LoanTransactionActivity extends AppCompatActivity {
                                 loanApplication.setApplicant_name(jsonarray.getJSONObject(i).getString("applicant_name"));
                                 loanApplication.setApproved_status(jsonarray.getJSONObject(i).getInt("is_verification"));
                                 loanApplication.setMember_photo_pr(jsonarray.getJSONObject(i).getString("member_photo_pr"));
-
+                                loanApplication.setIs_blc_verfied(jsonarray.getJSONObject(i).getInt("is_blc_verfied"));
+                                loanApplication.setMember_photo_pr(jsonarray.getJSONObject(i).getString("member_photo_pr"));
                                 loanApplications.add(loanApplication);
 
 

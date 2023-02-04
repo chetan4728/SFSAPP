@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.ingenioussys.microfinance.Activites.GroupManager.LoanApplication.LoanApplicationActivity;
 import com.ingenioussys.microfinance.Activites.GroupManager.LoanApplication.LoanTransactionActivity;
 import com.ingenioussys.microfinance.ApiServices.APIService;
 import com.ingenioussys.microfinance.R;
@@ -92,6 +93,7 @@ public class LoanActivityFour extends AppCompatActivity {
     String other_upload_string="";
     String bussiness_upload_string="";
     String sign_upload_string="";
+    boolean photo_flag = false,pan_flag = false,adhar_flag = false,other_upload_flag =false,bussiness_flag = false,sing_flag = false;
     Uri photo_upload_uri,pan_upload_uri,aadhar_upload_uri,other_upload_uri,bussiness_upload_uri,sign_upload_uri;
 
 
@@ -606,7 +608,30 @@ public class LoanActivityFour extends AppCompatActivity {
             loan_amount.setError("Please Enter Loan Amount");
             loan_amount.requestFocus();
         }
-
+        else if(member_photo_pr_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Profile Photo", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_pan_card_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Pan Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_adhar_card_uploaded == false)
+        {
+            Toast.makeText(this, "Please Upload Aadhar Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_new_business_activity_uploaded == false)
+        {
+            Toast.makeText(this, "Please Upload Bussiness Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_photo_signature_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Sign Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_other_proof_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Others proof ", Toast.LENGTH_SHORT).show();
+        }
 
         else
         {
@@ -1056,7 +1081,9 @@ public class LoanActivityFour extends AppCompatActivity {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 Log.d("Uploaded", String.valueOf(response.body().getMessage()));
-
+                Intent intent =  new Intent(LoanActivityFour.this, LoanTransactionActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -1131,6 +1158,30 @@ public class LoanActivityFour extends AppCompatActivity {
         {
             loan_amount.setError("Please Enter Loan Amount");
             loan_amount.requestFocus();
+        }
+        else if(member_photo_pr_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Profile Photo", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_pan_card_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Pan Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_adhar_card_uploaded == false)
+        {
+            Toast.makeText(this, "Please Upload Aadhar Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_new_business_activity_uploaded == false)
+        {
+            Toast.makeText(this, "Please Upload Bussiness Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_photo_signature_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Sign Photo ", Toast.LENGTH_SHORT).show();
+        }
+        else if(member_other_proof_uploaded==false)
+        {
+            Toast.makeText(this, "Please Upload Others proof ", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -1499,9 +1550,10 @@ public class LoanActivityFour extends AppCompatActivity {
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
-                Log.d("testadfasdf", response.body().getMessage());
+             //   Log.d("testadfasdf", response.body().getMessage());
                 UploadDocuments();
                 Toast.makeText(LoanActivityFour.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+
             }
 
             @Override

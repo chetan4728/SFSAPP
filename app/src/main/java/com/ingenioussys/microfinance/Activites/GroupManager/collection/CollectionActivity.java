@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ingenioussys.microfinance.Adapter.MyAdapter;
@@ -47,7 +48,8 @@ public class CollectionActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     MultiLevelRecyclerView multiLevelRecyclerView;
     List<?> finalData;
-    Button prevBtn,nextbtn;
+    EditText searchBox;
+    Button prevBtn,nextbtn,search;
     private int currentPage = 0;
     private  int limit = 25;
     @Override
@@ -65,12 +67,22 @@ public class CollectionActivity extends AppCompatActivity {
         multiLevelRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         prevBtn  = findViewById(R.id.prevBtn);
         nextbtn  = findViewById(R.id.nextbtn);
+        search  = findViewById(R.id.search);
+        searchBox  = findViewById(R.id.searchBox);
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //  Toast.makeText(LoanVerificationActivity.this, "", Toast.LENGTH_SHORT).show();
+                get_collection_data(currentPage,limit,searchBox.getText().toString());
+            }
+        });
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currentPage += 1;
-                get_collection_data(currentPage,limit);
-                Toast.makeText(CollectionActivity.this, ""+currentPage, Toast.LENGTH_SHORT).show();
+                get_collection_data(currentPage,limit,searchBox.getText().toString());
+                //Toast.makeText(CollectionActivity.this, ""+currentPage, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -80,12 +92,12 @@ public class CollectionActivity extends AppCompatActivity {
                 if (currentPage > 1) {
 
                     currentPage -= 1;
-                    get_collection_data(currentPage,limit);
-                    Toast.makeText(CollectionActivity.this, "" + currentPage, Toast.LENGTH_SHORT).show();
+                    get_collection_data(currentPage,limit,searchBox.getText().toString());
+                  //  Toast.makeText(CollectionActivity.this, "" + currentPage, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        get_collection_data(currentPage,limit);
+        get_collection_data(currentPage,limit,searchBox.getText().toString());
 
         //JSONArray arr = new JSONArray(itemList);
 
@@ -102,7 +114,7 @@ public class CollectionActivity extends AppCompatActivity {
        // multiLevelRecyclerView.openTill(0,1,2,3);
     }
 
-    public List<?> get_collection_data(int currentPage, int limit )
+    public List<?> get_collection_data(int currentPage, int limit , String group_name )
     {
         levelOne =  new ArrayList<>();
         progressDialog.show();
@@ -123,7 +135,7 @@ public class CollectionActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService service = retrofit.create(APIService.class);
-        Call<Result> call = service.get_emi_collectiondata(prefManager.getString("bank_id"),prefManager.getString("branch_id"),currentPage,limit, Integer.parseInt(prefManager.getString("employee_id")));
+        Call<Result> call = service.get_emi_collectiondata(prefManager.getString("bank_id"),prefManager.getString("branch_id"),currentPage,limit, Integer.parseInt(prefManager.getString("employee_id")),group_name);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

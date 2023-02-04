@@ -425,7 +425,24 @@
                         android:layout_height="wrap_content">
 
                     </EditText>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Enter Voter ID No"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/voter_id"
+                        android:inputType="text"
+                        android:gravity="top"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content">
 
+                    </EditText>
 
                     <com.jaiselrahman.hintspinner.HintSpinner
                         android:id="@+id/center_name"

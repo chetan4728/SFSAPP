@@ -38,10 +38,11 @@ public class CollectPayment extends AppCompatActivity {
     TextView applicant_name,applicant_email,applicant_no,applicant_add,loan_no,bank_name,area_name,branch_name,center_name,group_name;
     TextView loan_amount,monthly_emi,op_bal,closing_bal,emi_date;
     TextView emi_no,emi_lbl,submit_emi,payment_status,payment_date;
-    EditText get_emi;
+    EditText get_emi,get_saving_amount;
     PrefManager prefManager;
     ImageView profile_image;
     ProgressDialog progressDialog;
+    EditText get_saving_Account;
     String loan_distribution_emi_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class CollectPayment extends AppCompatActivity {
         progressDialog.setMessage("Loading Data...");
         submit_emi = findViewById(R.id.submit_emi);
         get_emi = findViewById(R.id.get_emi);
+        get_saving_amount  = findViewById(R.id.get_saving_amount);
         payment_date  = findViewById(R.id.payment_date);
         payment_status  = findViewById(R.id.payment_status);
         applicant_name = findViewById(R.id.applicant_name);
@@ -136,7 +138,7 @@ public class CollectPayment extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService service = retrofit.create(APIService.class);
-        Call<Result> call = service.update_emi_amount(this.getIntent().getExtras().getString("loan_application_no"),loan_distribution_emi_id,get_emi.getText().toString());
+        Call<Result> call = service.update_emi_amount(this.getIntent().getExtras().getString("loan_application_no"),loan_distribution_emi_id,get_emi.getText().toString(),get_saving_amount.getText().toString());
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

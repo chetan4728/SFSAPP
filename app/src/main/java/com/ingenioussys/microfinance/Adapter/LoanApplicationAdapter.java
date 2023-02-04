@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ingenioussys.microfinance.constant.Global.IMAGE_URL;
+
 public class LoanApplicationAdapter extends BaseAdapter {
     Context context;
     List<LoanApplication> loanApplications;
@@ -62,26 +64,28 @@ public class LoanApplicationAdapter extends BaseAdapter {
         TextView verificationStatus  = view.findViewById(R.id.status);
         applicant_name.setText(loanApplication.getApplicant_name());
         group_center_name.setText(loanApplication.getApplicant_name());
-        created_date.setText(loanApplication.getCreated_date());
+        created_date.setText(loanApplication.getLoan_application_number());
         File photo = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/MicroFinance/Documents/" +  loanApplication.getMember_photo_pr());
         //Glide.with(LoanActivityFour.this).load(photo).placeholder(R.drawable.ic_survey).into(member_photo_pr);
         ImageView profile_pic =  view.findViewById(R.id.profile_pic);
         //Toast.makeText(context, ""+photo, Toast.LENGTH_SHORT).show();
-        Picasso.get().load(photo).placeholder(R.drawable.ic_survey).into(profile_pic);
-        if(loanApplication.getApproved_status()==0)
+        Picasso.get().load(IMAGE_URL+loanApplication.getMember_photo_pr()).placeholder(R.drawable.ic_survey).into(profile_pic);
+        if(loanApplication.getIs_blc_verfied()==0)
         {
             verificationStatus.setText("Pending");
             verificationStatus.setTextColor(context.getResources().getColor(R.color.red));
+            view.setEnabled(false);
         }
-        else if(loanApplication.getApproved_status()==2)
-        {
-            verificationStatus.setText("Rejected");
-            verificationStatus.setTextColor(context.getResources().getColor(R.color.red));
-        }
-        else if(loanApplication.getApproved_status()==1)
+//        else if(loanApplication.getApproved_status()==2)
+//        {
+//            verificationStatus.setText("Rejected");
+//            verificationStatus.setTextColor(context.getResources().getColor(R.color.red));
+//        }
+        else if(loanApplication.getIs_blc_verfied()==1)
         {
             verificationStatus.setText("Approved");
             verificationStatus.setTextColor(context.getResources().getColor(R.color.green));
+            view.setEnabled(false);
         }
 
         view.setOnClickListener(new View.OnClickListener() {
